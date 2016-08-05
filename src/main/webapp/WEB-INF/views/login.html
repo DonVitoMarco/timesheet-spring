@@ -1,6 +1,5 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- META -->
     <title>LOGIN PAGE</title>
@@ -13,13 +12,14 @@
     <link type="text/css" rel="stylesheet" href="../../css/normalize.css" th:href="@{css/normalize.css}">
     <link type="text/css" rel="stylesheet" href="../../css/style.css" th:href="@{css/style.css}">
 </head>
-<body>
-    <h1>HOME PAGE</h1>
-    <div>
-        <a href="login.html" th:href="@{/login}">LOGIN</a>
-    </div>
-    <div sec:authorize="isAuthenticated()">
-        <a th:href="@{/logout}">LOGOUT</a>
-    </div>
+
+<body onload="document.f.username.focus()">
+    <h1>LOGIN PAGE</h1>
+    <form name="f" th:action="@{/login}" method="POST">
+        USERNAME: <input type="text" name="username" value=""><br>
+        PASSWORD: <input type="password" name="password" value=""><br>
+        <input name="submit" type="submit" value="LOGIN">
+    </form>
 </body>
+
 </html>

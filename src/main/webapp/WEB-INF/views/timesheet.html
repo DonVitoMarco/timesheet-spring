@@ -1,6 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <!-- META -->
     <title>LOGIN PAGE</title>
@@ -14,12 +14,11 @@
     <link type="text/css" rel="stylesheet" href="../../css/style.css" th:href="@{css/style.css}">
 </head>
 <body>
-    <h1>HOME PAGE</h1>
-    <div>
-        <a href="login.html" th:href="@{/login}">LOGIN</a>
-    </div>
+    <h1>TIMESHEET</h1>
     <div sec:authorize="isAuthenticated()">
-        <a th:href="@{/logout}">LOGOUT</a>
+        Witaj <span sec:authentication="name">user</span>!<br>
+        Roles <span sec:authentication="authorities">auth</span>
     </div>
+    <a th:href="@{/logout}" class="btn">LOG OUT</a>
 </body>
 </html>
