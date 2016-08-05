@@ -5,8 +5,22 @@ html, body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     background-color: azure;
+    width: 100%;
+    height: 100%;
 }
 
 h1 {
     font-weight: 300;
+}
+
+#sidebar {
+    height: 100%;
+    width: 4%;
+    background-color: darkslategray;
+    color: white;
+    overflow: hidden;
+}
+
+#navico {
+    padding: 20%;
 }
