@@ -21,7 +21,6 @@
             <scope>compile</scope>
         </dependency>
         <!-- SPRING SECURITY -->
-        <!-- SPRING SECURITY -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
@@ -44,6 +43,19 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
             <version>4.1.1.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- THYMELEAF -->
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+            <version>3.0.0.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring4</artifactId>
+            <version>3.0.0.RELEASE</version>
             <scope>compile</scope>
         </dependency>
         <!-- LOG -->
