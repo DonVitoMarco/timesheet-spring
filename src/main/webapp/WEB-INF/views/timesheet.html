@@ -2,23 +2,39 @@
 <html   xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
+
     <!-- META -->
-    <title>LOGIN PAGE</title>
+    <title>TIMESHEET</title>
     <meta charset="UTF-8">
 
     <!-- FONT -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="../../font/font-awesome-4.6.3/css/font-awesome.min.css">
 
     <!-- CSS -->
     <link type="text/css" rel="stylesheet" href="../../css/normalize.css" th:href="@{css/normalize.css}">
+    <link type="text/css" rel="stylesheet" href="../../font/font-awesome-4.6.3/css/font-awesome.css" th:href="@{font/font-awesome-4.6.3/css/font-awesome.min.css}">
     <link type="text/css" rel="stylesheet" href="../../css/style.css" th:href="@{css/style.css}">
+
+    <!-- SCRIPT -->
+    <script src="../../script/jquery-3.1.0.min.js"></script>
+    <script src="../../script/sidebar.js"></script>
+
 </head>
 <body>
-    <h1>TIMESHEET</h1>
-    <div sec:authorize="isAuthenticated()">
-        Witaj <span sec:authentication="name">user</span>!<br>
-        Roles <span sec:authentication="authorities">auth</span>
+
+    <div id="sidebar">
+        <i id="navico" class="fa fa-bars fa-2x" aria-hidden="true"></i>
     </div>
-    <a th:href="@{/logout}" class="btn">LOG OUT</a>
+
+    <div id="wrapper">
+        <h1>TIMESHEET</h1>
+        <div sec:authorize="isAuthenticated()">
+            Witaj <span sec:authentication="name">user</span>!<br>
+            Roles <span sec:authentication="authorities">auth</span>
+        </div>
+        <a th:href="@{/logout}" class="btn">LOG OUT</a>
+    </div>
+
 </body>
 </html>

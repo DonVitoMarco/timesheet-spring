@@ -18,6 +18,8 @@
     <link type="text/css" rel="stylesheet" href="../../css/style.css" th:href="@{css/style.css}">
 
     <!-- SCRIPT -->
+    <script src="../../script/jquery-3.1.0.min.js" th:src="@{script/jquery-3.1.0.min.js}"></script>
+    <script src="../../script/sidebar.js" th:src="@{script/sidebar.js}"></script>
 
 </head>
 <body>
@@ -27,7 +29,7 @@
     </div>
 
     <div id="wrapper">
-        <h1>HOME PAGE</h1>
+        <h1>TIMESHEET HOME PAGE</h1>
         <a href="login.html" th:href="@{/login}">LOGIN</a>
 
         <div sec:authorize="isAuthenticated()">
