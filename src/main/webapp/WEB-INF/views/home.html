@@ -26,15 +26,19 @@
 
     <div id="sidebar">
         <i id="navico" class="fa fa-bars fa-2x" aria-hidden="true"></i>
+
+        <div id="main-menu">
+            <a sec:authorize="isAuthenticated()" th:href="@{/timesheet}">TIMESHEET</a>
+        </div>
+
+        <div id="login-menu">
+            <a sec:authorize="isAnonymous()" th:href="@{/login}">LOGIN</a>
+            <a sec:authorize="isAuthenticated()" th:href="@{/logout}">LOGOUT</a>
+        </div>
     </div>
 
     <div id="wrapper">
         <h1>TIMESHEET HOME PAGE</h1>
-        <a href="login.html" th:href="@{/login}">LOGIN</a>
-
-        <div sec:authorize="isAuthenticated()">
-            <a th:href="@{/logout}">LOGOUT</a>
-        </div>
     </div>
 
 </body>
