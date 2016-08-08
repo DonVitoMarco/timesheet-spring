@@ -10,6 +10,7 @@ html, body {
 }
 
 h1 {
+    margin: 0;
     font-weight: 300;
 }
 
@@ -19,8 +20,14 @@ h1 {
     background-color: darkslategray;
     color: white;
     overflow: hidden;
+    float: left;
 }
 
 #navico {
     padding: 20%;
+}
+
+#wrapper {
+    width: 96%;
+    float: right;
 }
