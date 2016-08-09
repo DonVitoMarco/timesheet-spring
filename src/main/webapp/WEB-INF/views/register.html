@@ -4,7 +4,7 @@
 <head>
 
     <!-- META -->
-    <title>LOGIN PAGE</title>
+    <title>REGISTER PAGE</title>
     <meta charset="UTF-8">
 
     <!-- FONT -->
@@ -17,16 +17,16 @@
 </head>
 <body onload="document.f.username.focus()">
 
-    <div id="content-login">
+<div id="content-login">
     <div id="login-box">
-        <h1>LOGIN PAGE</h1>
-        <form name="f" th:action="@{/login}" method="POST">
-            USERNAME: <input type="text" name="username" value=""><br>
-            PASSWORD: <input type="password" name="password" value=""><br>
-            <input name="submit" type="submit" value="LOGIN">
+        <h1>REGISTER PAGE</h1>
+        <form name="f" th:action="@{/register}" th:object="${user}" method="POST">
+            USERNAME: <input type="text" th:field="*{username}" name="username" required="required" value=""><br>
+            PASSWORD: <input type="password" th:field="*{password}" name="password" required="required" value=""><br>
+            <input name="submit" type="submit" value="REGISTER">
         </form>
-        </div>
     </div>
+</div>
 
 </body>
 </html>

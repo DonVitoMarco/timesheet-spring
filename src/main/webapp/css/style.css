@@ -7,6 +7,7 @@ html, body {
     background-color: azure;
     width: 100%;
     height: 100%;
+    color: slategray;
 }
 
 h1 {
@@ -26,7 +27,7 @@ h1 {
 }
 
 #navico {
-
+    margin-top: 5px;
 }
 
 #wrapper {
@@ -38,7 +39,7 @@ h1 {
 #login-menu, #main-menu {
     display: none;
     position: relative;
-    top: 75%;
+    top: 65%;
     width: 100%;
     text-align: center;
 }
@@ -48,8 +49,23 @@ h1 {
     font-weight: 400;
     color: white;
     text-decoration: none;
+    line-height: 1.8;
 }
 
 #main-menu {
-    top: 20%;
+    top: 12%;
+}
+
+#content-login {
+    text-align: center;
+    padding-top: 12%;
+}
+
+#login-box {
+    display: inline-block;
+    text-align: center;
+    padding: 30px;
+    background-color: darkslategrey;
+    border-radius: 10px;
+    color: white;
 }

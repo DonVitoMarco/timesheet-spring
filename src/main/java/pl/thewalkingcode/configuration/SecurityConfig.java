@@ -7,14 +7,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import pl.thewalkingcode.controller.HomeControllerComponentScanner;
+import pl.thewalkingcode.controller.ControllerComponentScanner;
 
 import javax.sql.DataSource;
 
 
 @EnableWebSecurity
 @Configuration
-@ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, HomeControllerComponentScanner.class})
+@ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, ControllerComponentScanner.class})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("SELECT username, password, enable FROM users WHERE username=?")
-                .authoritiesByUsernameQuery("SELECT username, 'ROLE_USER' FROM users WHERE username=?");
+                .authoritiesByUsernameQuery("SELECT users.username, roles.roles FROM users INNER JOIN roles ON users.id_roles=roles.id_roles WHERE users.username=?");
     }
 
     @Override
@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/timesheet").and()
+                .defaultSuccessUrl("/").and()
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/").and()
@@ -41,8 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/403").and()
 
                 .authorizeRequests()
+                .antMatchers("/manage").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/timesheet").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/logout").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+                .antMatchers("/register").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/").permitAll();
 

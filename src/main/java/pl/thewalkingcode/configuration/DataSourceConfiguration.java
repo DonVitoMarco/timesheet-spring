@@ -8,13 +8,13 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import pl.thewalkingcode.controller.HomeControllerComponentScanner;
+import pl.thewalkingcode.controller.ControllerComponentScanner;
 
 import javax.sql.DataSource;
 
 
 @Configuration
-@ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, HomeControllerComponentScanner.class})
+@ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, ControllerComponentScanner.class})
 @PropertySource("classpath:db.properties")
 public class DataSourceConfiguration {
 

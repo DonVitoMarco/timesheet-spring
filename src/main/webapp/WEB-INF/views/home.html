@@ -5,7 +5,7 @@
 <head>
 
     <!-- META -->
-    <title>LOGIN PAGE</title>
+    <title>HOME PAGE</title>
     <meta charset="UTF-8">
 
     <!-- FONT -->
@@ -29,10 +29,12 @@
 
         <div id="main-menu">
             <a sec:authorize="isAuthenticated()" th:href="@{/timesheet}">TIMESHEET</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/manage}">MANAGE</a>
         </div>
 
         <div id="login-menu">
             <a sec:authorize="isAnonymous()" th:href="@{/login}">LOGIN</a>
+            <a sec:authorize="isAnonymous()" th:href="@{/register}">REGISTER</a>
             <a sec:authorize="isAuthenticated()" th:href="@{/logout}">LOGOUT</a>
         </div>
     </div>

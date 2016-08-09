@@ -12,12 +12,12 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
-import pl.thewalkingcode.controller.HomeControllerComponentScanner;
+import pl.thewalkingcode.controller.ControllerComponentScanner;
 
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, HomeControllerComponentScanner.class})
+@ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, ControllerComponentScanner.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
