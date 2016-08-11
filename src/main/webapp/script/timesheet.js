@@ -9,11 +9,10 @@ jQuery(document).ready(function ($) {
 
 function showAjax() {
 
-    var data = {}
-    data["start"] = $("#start").val();
-    data["end"] = $("#end").val();
+    var data = {};
+    data["dataStart"] = $("#data-start").val();
+    data["dataEnd"] = $("#data-end").val();
     console.log("DATA: ", data);
-
 
     $.ajax({
         type: "POST",
@@ -22,6 +21,10 @@ function showAjax() {
         data: JSON.stringify(data),
         dataType: 'json',
         timeout: 100000,
+
+        beforeSend: function () {
+            console.log("SEND")
+        },
         success: function (d) {
             console.log("SUCCESS: ", d);
             display(d);
@@ -37,5 +40,4 @@ function showAjax() {
     function display(d) {
 
     }
-
 }

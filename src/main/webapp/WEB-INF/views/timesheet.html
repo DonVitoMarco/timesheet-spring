@@ -5,7 +5,9 @@
 
     <!-- META -->
     <title>TIMESHEET</title>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
     <!-- FONT -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
@@ -36,10 +38,10 @@
         </div>
         <a th:href="@{/logout}" class="btn">LOG OUT</a>
         <hr>
-        <h1>LOGIN PAGE</h1>
+        <h1>SHOW</h1>
         <form id="show-form">
-            START: <input type="text" id="start"><br>
-            END: <input type="text" id="end"><br>
+            DATA START: <input type="text" id="data-start"><br>
+            DATA END: <input type="text" id="data-end"><br>
             <button type="submit" id="bth-show">SHOW</button>
         </form>
 

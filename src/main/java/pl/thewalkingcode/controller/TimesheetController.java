@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
+@RequestMapping(value = "/timesheet")
 public class TimesheetController {
 
-    @RequestMapping(value = "/timesheet", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String timesheet(Model model) {
         return "timesheet";
     }
