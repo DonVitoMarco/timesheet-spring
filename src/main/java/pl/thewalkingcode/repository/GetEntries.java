@@ -15,9 +15,13 @@ import java.util.Map;
 @Repository
 public class GetEntries {
 
-    @Autowired
     JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    public GetEntries(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+    
     private static final String GET_ALL = "SELECT entries.data, entries.start, entries.end, entries.time, entries.user, department.department_name" +
             "FROM entries INNER JOIN department ON entries.department = department.department_id WHERE entries.user = 'marek'";
 
