@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import pl.thewalkingcode.controller.ControllerComponentScanner;
+import pl.thewalkingcode.repository.RepositoryComponentScanner;
 import pl.thewalkingcode.service.ServiceComponentScanner;
 
 import javax.sql.DataSource;
@@ -16,7 +17,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, ControllerComponentScanner.class,
-        ServiceComponentScanner.class})
+        ServiceComponentScanner.class, RepositoryComponentScanner.class})
 @PropertySource("classpath:db.properties")
 public class DataSourceConfiguration {
 

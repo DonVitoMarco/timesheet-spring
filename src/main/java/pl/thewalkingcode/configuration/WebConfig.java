@@ -13,13 +13,14 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 import pl.thewalkingcode.controller.ControllerComponentScanner;
+import pl.thewalkingcode.repository.RepositoryComponentScanner;
 import pl.thewalkingcode.service.ServiceComponentScanner;
 
 
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, ControllerComponentScanner.class,
-        ServiceComponentScanner.class})
+        ServiceComponentScanner.class, RepositoryComponentScanner.class})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean

@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import pl.thewalkingcode.controller.ControllerComponentScanner;
+import pl.thewalkingcode.repository.RepositoryComponentScanner;
 import pl.thewalkingcode.service.ServiceComponentScanner;
 
 import javax.sql.DataSource;
@@ -16,7 +17,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @Configuration
 @ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, ControllerComponentScanner.class,
-        ServiceComponentScanner.class})
+        ServiceComponentScanner.class, RepositoryComponentScanner.class})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
