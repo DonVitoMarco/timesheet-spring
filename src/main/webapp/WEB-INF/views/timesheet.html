@@ -19,6 +19,7 @@
     <!-- SCRIPT -->
     <script src="../../script/jquery-3.1.0.min.js"></script>
     <script src="../../script/sidebar.js"></script>
+    <script src="../../script/timesheet.js"></script>
 
 </head>
 <body>
@@ -34,6 +35,15 @@
             Roles <span sec:authentication="authorities">auth</span>
         </div>
         <a th:href="@{/logout}" class="btn">LOG OUT</a>
+        <hr>
+        <h1>LOGIN PAGE</h1>
+        <form id="show-form">
+            START: <input type="text" id="start"><br>
+            END: <input type="text" id="end"><br>
+            <button type="submit" id="bth-show">SHOW</button>
+        </form>
+
+
     </div>
 
 </body>

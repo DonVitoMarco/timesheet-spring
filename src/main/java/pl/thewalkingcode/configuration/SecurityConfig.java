@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/").and()
 
                 .exceptionHandling()
-                .accessDeniedPage("/403").and()
+                .accessDeniedPage("/denied").and()
 
                 .authorizeRequests()
                 .antMatchers("/manage").access("hasRole('ROLE_ADMIN')")

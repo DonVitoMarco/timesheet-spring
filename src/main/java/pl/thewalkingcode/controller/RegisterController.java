@@ -18,8 +18,8 @@ import javax.validation.Valid;
 @RequestMapping("/register")
 public class RegisterController {
 
-    @Autowired
-    IRegisterQueryService registerQueryService;
+//    @Autowired
+//    IRegisterQueryService registerQueryService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String showRegistrationForm(Model model) {
@@ -32,7 +32,7 @@ public class RegisterController {
     public String addNewUser(@ModelAttribute("user") @Valid UserDTO userDTO, BindingResult result, Errors errors) {
         System.out.println(userDTO.getPassword().toUpperCase());
         System.out.println(userDTO.getUsername().toUpperCase());
-        registerQueryService.addUser(userDTO);
+//        registerQueryService.addUser(userDTO);
         return "redirect:/";
     }
 
