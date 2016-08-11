@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.thewalkingcode.model.Entry;
 import pl.thewalkingcode.repository.GetEntries;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -14,7 +15,7 @@ public class EntryQueryService implements IEntryQueryService {
     @Autowired
     GetEntries getEntries;
 
-    public List<Entry> getEntries(String username, String startDate, String endDate) {
+    public List<Entry> getEntries(String username, LocalDate startDate, LocalDate endDate) {
         return getEntries.getAllEntries();
     }
 

@@ -2,8 +2,8 @@ package pl.thewalkingcode.model;
 
 public class ShowCriteriaDTO {
 
-    String dataStart;
-    String dataEnd;
+    private String dataStart;
+    private String dataEnd;
 
     public String getDataStart() {
         return dataStart;
