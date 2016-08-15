@@ -1,16 +1,14 @@
 package pl.thewalkingcode.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import pl.thewalkingcode.model.Entry;
 import pl.thewalkingcode.model.ShowCriteriaDTO;
-import pl.thewalkingcode.service.EntryQueryService;
-import pl.thewalkingcode.service.IEntryQueryService;
+import pl.thewalkingcode.service.IEntriesQueryService;
 
 import java.time.LocalDate;
 
@@ -19,14 +17,18 @@ import java.time.LocalDate;
 @RequestMapping(value = "/ajax")
 public class AjaxRestController {
 
+    private IEntriesQueryService entriesQueryService;
+
     @Autowired
-    IEntryQueryService entryQueryService;
+    public AjaxRestController(IEntriesQueryService entriesQueryService) {
+        this.entriesQueryService = entriesQueryService;
+    }
 
     @RequestMapping(value = "/show", method = RequestMethod.POST)
     public String show(@RequestBody ShowCriteriaDTO showCriteriaDTO) {
         LocalDate start = changeDate(showCriteriaDTO.getDataStart());
         LocalDate end = changeDate(showCriteriaDTO.getDataEnd());
-        System.out.println(entryQueryService.getEntries(SecurityContextHolder.getContext().getAuthentication().getName(), start, end));
+        entriesQueryService.getAllEntries(SecurityContextHolder.getContext().getAuthentication().getName());
         return "request";
     }
 

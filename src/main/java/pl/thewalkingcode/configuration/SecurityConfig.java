@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import pl.thewalkingcode.controller.ControllerComponentScanner;
-import pl.thewalkingcode.repository.RepositoryComponentScanner;
 import pl.thewalkingcode.service.ServiceComponentScanner;
 
 import javax.sql.DataSource;
@@ -17,7 +16,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @Configuration
 @ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, ControllerComponentScanner.class,
-        ServiceComponentScanner.class, RepositoryComponentScanner.class})
+        ServiceComponentScanner.class})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -26,8 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("SELECT username, password, enable FROM users WHERE username=?")
-                .authoritiesByUsernameQuery("SELECT users.username, roles.roles FROM users INNER JOIN roles ON users.id_roles=roles.id_roles WHERE users.username=?");
+                .usersByUsernameQuery("SELECT users.USERNAME, users.PASSWORD, users.ENABLE FROM users WHERE users.USERNAME=?")
+                .authoritiesByUsernameQuery("SELECT users.USERNAME, roles.ROLES_NAME FROM users INNER JOIN roles ON users.ROLES_ID = roles.ROLES_ID WHERE users.USERNAME=?");
     }
 
     @Override
