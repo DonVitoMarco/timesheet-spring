@@ -1,14 +1,15 @@
 package pl.thewalkingcode.service;
 
-
 import pl.thewalkingcode.model.EntryQueryDTO;
 
+import java.sql.Date;
 import java.util.List;
+
 
 public interface IEntriesQueryService {
 
     EntryQueryDTO getEntryByIndex(int index);
 
-    List<EntryQueryDTO> getAllEntries(String username);
+    List<EntryQueryDTO> getAllEntries(String username, Date startDate, Date endDate);
 
 }

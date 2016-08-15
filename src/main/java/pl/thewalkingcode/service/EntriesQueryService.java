@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import pl.thewalkingcode.model.EntryQueryDTO;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,11 +15,12 @@ import java.util.List;
 @Component
 public class EntriesQueryService implements IEntriesQueryService {
 
-    private static final String getEntry =  "SELECT entries.ENTRIES_ID, entries.DATE, entries.TIME, entries.START, " +
+    private static final String GET_ENTRIES = "SELECT entries.ENTRIES_ID, entries.DATE, entries.TIME, entries.START, " +
                                             "entries.END, entries.APPROVE, users.USERNAME, departments.DEPARTMENT_NAME FROM entries " +
                                             "INNER JOIN users ON entries.USER_ID = users.USER_ID " +
                                             "INNER JOIN departments ON entries.DEPARTMENT_ID = departments.DEPARTMENT_ID " +
-                                            "WHERE users.USERNAME = ?";
+                                            "WHERE users.USERNAME = ? AND " +
+                                            "entries.DATE BETWEEN ? AND ?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -33,10 +35,10 @@ public class EntriesQueryService implements IEntriesQueryService {
     }
 
     @Override
-    public List<EntryQueryDTO> getAllEntries(String username) {
+    public List<EntryQueryDTO> getAllEntries(String username, Date startDate, Date endDate) {
 
         //TODO lambda
-        List<EntryQueryDTO> listEntries = jdbcTemplate.query(getEntry, new RowMapper<EntryQueryDTO>() {
+        List<EntryQueryDTO> listEntries = jdbcTemplate.query(GET_ENTRIES, new RowMapper<EntryQueryDTO>() {
             public EntryQueryDTO mapRow(ResultSet result, int rowNum) throws SQLException {
                 EntryQueryDTO entry = new EntryQueryDTO();
                 entry.setIndex(result.getInt("ENTRIES_ID"));
@@ -49,7 +51,7 @@ public class EntriesQueryService implements IEntriesQueryService {
                 entry.setApprove(result.getBoolean("APPROVE"));
                 return entry;
             }
-        }, username);
+        }, username, startDate, endDate);
 
         //TODO logger
         for(EntryQueryDTO entry : listEntries) {

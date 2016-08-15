@@ -3,6 +3,7 @@ package pl.thewalkingcode.model;
 import java.sql.Date;
 import java.sql.Time;
 
+
 public class EntryQueryDTO {
 
     private int index;
