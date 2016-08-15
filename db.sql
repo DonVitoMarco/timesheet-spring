@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
--- Host: localhost    Database: timesheet
+-- Host: localhost    Database: ts_dev
 -- ------------------------------------------------------
 -- Server version	5.7.14-log
 
@@ -16,30 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `department`
+-- Table structure for table `departments`
 --
 
-DROP TABLE IF EXISTS `department`;
+DROP TABLE IF EXISTS `departments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `department` (
-  `department_id` int(11) NOT NULL AUTO_INCREMENT,
-  `department_name` varchar(25) NOT NULL,
-  `username` varchar(25) NOT NULL,
-  PRIMARY KEY (`department_id`),
-  KEY `username_idx` (`username`),
-  CONSTRAINT `username` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+CREATE TABLE `departments` (
+  `DEPARTMENT_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `DEPARTMENT_NAME` varchar(45) NOT NULL,
+  `USER_ID` int(11) NOT NULL,
+  PRIMARY KEY (`DEPARTMENT_ID`),
+  KEY `USER_ID_idx` (`USER_ID`),
+  CONSTRAINT `DEPARTMENTS_USER_ID` FOREIGN KEY (`USER_ID`) REFERENCES `users` (`USER_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `department`
+-- Dumping data for table `departments`
 --
 
-LOCK TABLES `department` WRITE;
-/*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` VALUES (0,'Techniczny','admin');
-/*!40000 ALTER TABLE `department` ENABLE KEYS */;
+LOCK TABLES `departments` WRITE;
+/*!40000 ALTER TABLE `departments` DISABLE KEYS */;
+INSERT INTO `departments` VALUES (1,'TECHNICZNY',2);
+/*!40000 ALTER TABLE `departments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -50,20 +50,20 @@ DROP TABLE IF EXISTS `entries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `entries` (
-  `entries_id` int(11) NOT NULL AUTO_INCREMENT,
-  `data` date NOT NULL,
-  `start` time NOT NULL,
-  `end` time NOT NULL,
-  `time` time NOT NULL,
-  `approve` tinyint(1) NOT NULL DEFAULT '0',
-  `user` varchar(25) NOT NULL,
-  `department` int(11) NOT NULL,
-  PRIMARY KEY (`entries_id`),
-  KEY `username_idx` (`user`),
-  KEY `department_idx` (`department`),
-  CONSTRAINT `department` FOREIGN KEY (`department`) REFERENCES `department` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `user` FOREIGN KEY (`user`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `ENTRIES_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `DATE` date NOT NULL,
+  `TIME` time NOT NULL,
+  `START` time NOT NULL,
+  `END` time NOT NULL,
+  `APPROVE` tinyint(1) NOT NULL DEFAULT '0',
+  `USER_ID` int(11) NOT NULL,
+  `DEPARTMENT_ID` int(11) NOT NULL,
+  PRIMARY KEY (`ENTRIES_ID`),
+  KEY `USER_ID_idx` (`USER_ID`),
+  KEY `DEPARTMENT_ID_idx` (`DEPARTMENT_ID`),
+  CONSTRAINT `ENTRIES_DEPARTMENT_ID` FOREIGN KEY (`DEPARTMENT_ID`) REFERENCES `departments` (`DEPARTMENT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `ENTRIES_USER_ID` FOREIGN KEY (`USER_ID`) REFERENCES `users` (`USER_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `entries` (
 
 LOCK TABLES `entries` WRITE;
 /*!40000 ALTER TABLE `entries` DISABLE KEYS */;
-INSERT INTO `entries` VALUES (1,'2016-08-09','09:00:00','17:00:00','08:00:00',0,'marek',0),(2,'2016-07-29','08:00:00','18:00:00','10:00:00',0,'marek',0);
+INSERT INTO `entries` VALUES (3,'2016-08-10','08:00:00','08:00:00','16:00:00',0,1,1),(4,'2016-08-10','08:00:00','09:00:00','17:00:00',1,2,1);
 /*!40000 ALTER TABLE `entries` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,10 +84,10 @@ DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `roles` (
-  `id_roles` tinyint(1) NOT NULL AUTO_INCREMENT,
-  `roles` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_roles`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `ROLES_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ROLES_NAME` varchar(25) NOT NULL,
+  PRIMARY KEY (`ROLES_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,14 +108,15 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `username` varchar(25) NOT NULL,
-  `password` varchar(25) NOT NULL,
-  `enable` tinyint(1) NOT NULL DEFAULT '1',
-  `id_roles` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`username`),
-  KEY `ID_ROLES_idx` (`id_roles`),
-  CONSTRAINT `ID_ROLES` FOREIGN KEY (`id_roles`) REFERENCES `roles` (`id_roles`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `USER_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USERNAME` varchar(45) NOT NULL,
+  `PASSWORD` varchar(45) NOT NULL,
+  `ENABLE` tinyint(1) NOT NULL DEFAULT '0',
+  `ROLES_ID` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`USER_ID`),
+  KEY `ROLES_ID_idx` (`ROLES_ID`),
+  CONSTRAINT `USERS_ROLES_ID` FOREIGN KEY (`ROLES_ID`) REFERENCES `roles` (`ROLES_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +125,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('admin','admin',1,1),('marek','marek',1,0);
+INSERT INTO `users` VALUES (1,'marek','marek',1,0),(2,'admin','admin',1,0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -137,4 +138,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-09 16:27:18
+-- Dump completed on 2016-08-15 22:33:25
