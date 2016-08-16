@@ -5,10 +5,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.thewalkingcode.model.EntryQueryDTO;
 import pl.thewalkingcode.model.ShowCriteriaFormDTO;
 import pl.thewalkingcode.service.IEntriesQueryService;
 
 import java.sql.Date;
+import java.util.List;
 
 
 @RestController
@@ -23,13 +25,11 @@ public class AjaxRestController {
     }
 
     @RequestMapping(value = "/show")
-    public String show(@RequestBody ShowCriteriaFormDTO showCriteriaDTO) {
+    public List<EntryQueryDTO> showEntries(@RequestBody ShowCriteriaFormDTO showCriteriaDTO) {
+        //TODO logger
         System.out.println(showCriteriaDTO.toString());
-        System.out.println(Date.valueOf(showCriteriaDTO.getDataStart()));
-        System.out.println(Date.valueOf(showCriteriaDTO.getDataEnd()));
-        entriesQueryService.getAllEntries(SecurityContextHolder.getContext().getAuthentication().getName(),
+        return entriesQueryService.getAllEntries(SecurityContextHolder.getContext().getAuthentication().getName(),
                 Date.valueOf(showCriteriaDTO.getDataStart()), Date.valueOf(showCriteriaDTO.getDataEnd()));
-        return "request";
     }
 
 //    private LocalDate changeDate(String dateToSplit) {

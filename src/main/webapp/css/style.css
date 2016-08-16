@@ -69,3 +69,10 @@ h1 {
     border-radius: 10px;
     color: white;
 }
+
+td, th {
+    width: 7%;
+    height: 20px;
+    text-align: center;
+    border-bottom: 1px solid lightblue;
+}
