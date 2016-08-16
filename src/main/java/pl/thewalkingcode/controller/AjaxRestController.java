@@ -5,8 +5,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.thewalkingcode.model.EntryFormDTO;
 import pl.thewalkingcode.model.EntryQueryDTO;
 import pl.thewalkingcode.model.ShowCriteriaFormDTO;
+import pl.thewalkingcode.service.IEntriesCommandService;
 import pl.thewalkingcode.service.IEntriesQueryService;
 
 import java.sql.Date;
@@ -18,10 +20,12 @@ import java.util.List;
 public class AjaxRestController {
 
     private IEntriesQueryService entriesQueryService;
+    private IEntriesCommandService entriesCommandService;
 
     @Autowired
-    public AjaxRestController(IEntriesQueryService entriesQueryService) {
+    public AjaxRestController(IEntriesQueryService entriesQueryService, IEntriesCommandService entriesCommandService) {
         this.entriesQueryService = entriesQueryService;
+        this.entriesCommandService = entriesCommandService;
     }
 
     @RequestMapping(value = "/show")
@@ -30,6 +34,12 @@ public class AjaxRestController {
         System.out.println(showCriteriaDTO.toString());
         return entriesQueryService.getAllEntries(SecurityContextHolder.getContext().getAuthentication().getName(),
                 Date.valueOf(showCriteriaDTO.getDataStart()), Date.valueOf(showCriteriaDTO.getDataEnd()));
+    }
+
+    @RequestMapping(value = "/add")
+    public String addEntry(@RequestBody EntryFormDTO entryFormDTO) {
+        System.out.println(entryFormDTO.toString());
+        return "response";
     }
 
 //    private LocalDate changeDate(String dateToSplit) {

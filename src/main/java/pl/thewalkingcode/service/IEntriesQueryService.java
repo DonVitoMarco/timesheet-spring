@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IEntriesQueryService {
 
-    EntryQueryDTO getEntryByIndex(int index);
+    EntryQueryDTO getEntryByIndex(String username, int index);
 
     List<EntryQueryDTO> getAllEntries(String username, Date startDate, Date endDate);
 

@@ -76,3 +76,7 @@ td, th {
     text-align: center;
     border-bottom: 1px solid lightblue;
 }
+
+#add-form {
+    display: none;
+}

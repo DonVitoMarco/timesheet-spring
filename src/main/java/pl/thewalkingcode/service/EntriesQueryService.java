@@ -22,6 +22,7 @@ public class EntriesQueryService implements IEntriesQueryService {
                                             "WHERE users.USERNAME = ? AND " +
                                             "entries.DATE BETWEEN ? AND ?";
 
+
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -30,7 +31,7 @@ public class EntriesQueryService implements IEntriesQueryService {
     }
 
     @Override
-    public EntryQueryDTO getEntryByIndex(int index) {
+    public EntryQueryDTO getEntryByIndex(String username, int index) {
         return null;
     }
 

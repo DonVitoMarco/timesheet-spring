@@ -6,25 +6,20 @@
     <!-- META -->
     <title>TIMESHEET</title>
     <meta charset="UTF-8"/>
-    <meta name="_csrf" content="${_csrf.token}"/>
-    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
     <!-- FONT -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
     <link type="text/css" rel="stylesheet" href="../../font/font-awesome-4.6.3/css/font-awesome.min.css">
 
     <!-- CSS -->
-    <link type="text/css" rel="stylesheet" href="../../css/jquery-ui.css" th:href="@{css/jquery-ui.css}">
     <link type="text/css" rel="stylesheet" href="../../css/normalize.css" th:href="@{css/normalize.css}">
     <link type="text/css" rel="stylesheet" href="../../font/font-awesome-4.6.3/css/font-awesome.css" th:href="@{font/font-awesome-4.6.3/css/font-awesome.min.css}">
     <link type="text/css" rel="stylesheet" href="../../css/style.css" th:href="@{css/style.css}">
 
     <!-- SCRIPT -->
     <script src="../../script/jquery-3.1.0.min.js"></script>
-    <script src="../../script/jquery-ui.js"></script>
     <script src="../../script/sidebar.js"></script>
     <script src="../../script/timesheet.js"></script>
-    <script src="../../script/datepicker.js"></script>
 
 </head>
 <body>
@@ -43,8 +38,8 @@
         <hr>
         <h1>SHOW</h1>
         <form id="show-form">
-            DATA START: <input type="text" id="data-start"><br>
-            DATA END: <input type="text" id="data-end"><br>
+            DATA START: <input type="date" id="data-start"><br>
+            DATA END: <input type="date" id="data-end"><br>
             <button type="submit" id="bth-show">SHOW</button>
         </form>
         <hr>
@@ -59,9 +54,20 @@
                     <th>APPROVE</th>
                     <th>DEPARTMENT</th>
                     <th>USERNAME</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
         </table>
+        <hr>
+        <button id="add-form-button" type="button">NEW ENTRY</button>
+        <form id="add-form">
+            DATA: <input type="date" id="add-form-date"><br>
+            TIME START: <input type="time" id="add-form-time-start" value="08:00"><br>
+            TIME END: <input type="time" id="add-form-time-end" value="16:00"><br>
+            DEPARTMENT: <input type="text" id="add-form-department"><br>
+            <input type="submit" id="add-form-submit" value="ADD">
+        </form>
     </div>
 
 </body>
