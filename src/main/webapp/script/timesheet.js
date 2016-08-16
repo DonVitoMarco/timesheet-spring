@@ -33,7 +33,7 @@ function showAjax() {
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/ajax/show",
+        url: "/ajax/query/show",
         data: JSON.stringify(data),
         dataType: 'json',
         timeout: 100000,
@@ -66,7 +66,6 @@ function showAjax() {
         row.append($("<td>" + rowData.endTime + "</td>"));
         row.append($("<td>" + rowData.time + "</td>"));
         row.append($("<td>" + rowData.approve + "</td>"));
-        row.append($("<td>" + rowData.department + "</td>"));
         row.append($("<td>" + rowData.username + "</td>"));
         row.append($("<td>" + "<button class=\"edit\">" + "EDIT" + "</button>" + "</td>"));
         row.append($("<td> <button class=\"delete\">" + "DELETE" + "</button> </td>"));
@@ -80,13 +79,12 @@ function addAjax() {
     add["date"] = $("#add-form-date").val();
     add["timeStart"] = $("#add-form-time-start").val();
     add["timeEnd"] = $("#add-form-time-end").val();
-    add["department"] = $("#add-form-department").val();
     console.log("SEND", add)
 
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/ajax/add",
+        url: "/ajax/command/add",
         data: JSON.stringify(add),
         dataType: 'json',
         timeout: 100000,

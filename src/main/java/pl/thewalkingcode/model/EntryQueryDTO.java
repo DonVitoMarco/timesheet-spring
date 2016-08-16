@@ -13,7 +13,6 @@ public class EntryQueryDTO {
     private Time startTime;
     private Time endTime;
     private boolean approve;
-    private String department;
 
     public boolean isApprove() {
         return approve;
@@ -21,14 +20,6 @@ public class EntryQueryDTO {
 
     public void setApprove(boolean approve) {
         this.approve = approve;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
     }
 
     public Time getTime() {
@@ -89,7 +80,6 @@ public class EntryQueryDTO {
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", approve=" + approve +
-                ", department='" + department + '\'' +
                 '}';
     }
 

@@ -15,13 +15,7 @@ import java.util.List;
 @Component
 public class EntriesQueryService implements IEntriesQueryService {
 
-    private static final String GET_ENTRIES = "SELECT entries.ENTRIES_ID, entries.DATE, entries.TIME, entries.START, " +
-                                            "entries.END, entries.APPROVE, users.USERNAME, departments.DEPARTMENT_NAME FROM entries " +
-                                            "INNER JOIN users ON entries.USER_ID = users.USER_ID " +
-                                            "INNER JOIN departments ON entries.DEPARTMENT_ID = departments.DEPARTMENT_ID " +
-                                            "WHERE users.USERNAME = ? AND " +
-                                            "entries.DATE BETWEEN ? AND ?";
-
+    private static final String GET_ENTRIES = "SELECT entries.*, users.USERNAME FROM entries INNER JOIN users ON entries.USER_ID = users.USER_ID WHERE users.USERNAME = ? AND entries.DATE BETWEEN ? AND ?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -48,7 +42,6 @@ public class EntriesQueryService implements IEntriesQueryService {
                 entry.setTime(result.getTime("TIME"));
                 entry.setStartTime(result.getTime("START"));
                 entry.setEndTime(result.getTime("END"));
-                entry.setDepartment(result.getString("DEPARTMENT_NAME"));
                 entry.setApprove(result.getBoolean("APPROVE"));
                 return entry;
             }

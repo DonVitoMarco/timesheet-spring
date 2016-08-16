@@ -9,7 +9,6 @@ public class EntryFormDTO {
     private Date date;
     private String timeStart;
     private String timeEnd;
-    private String department;
 
     public Date getDate() {
         return date;
@@ -35,21 +34,12 @@ public class EntryFormDTO {
         this.timeEnd = timeEnd;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
     @Override
     public String toString() {
         return "EntryFormDTO{" +
                 "date=" + date +
                 ", timeStart='" + timeStart + '\'' +
                 ", timeEnd='" + timeEnd + '\'' +
-                ", department='" + department + '\'' +
                 '}';
     }
 

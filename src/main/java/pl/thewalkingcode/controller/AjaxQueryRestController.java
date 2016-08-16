@@ -16,16 +16,14 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/ajax")
-public class AjaxRestController {
+@RequestMapping(value = "/ajax/query")
+public class AjaxQueryRestController {
 
     private IEntriesQueryService entriesQueryService;
-    private IEntriesCommandService entriesCommandService;
 
     @Autowired
-    public AjaxRestController(IEntriesQueryService entriesQueryService, IEntriesCommandService entriesCommandService) {
+    public AjaxQueryRestController(IEntriesQueryService entriesQueryService) {
         this.entriesQueryService = entriesQueryService;
-        this.entriesCommandService = entriesCommandService;
     }
 
     @RequestMapping(value = "/show")
@@ -36,18 +34,6 @@ public class AjaxRestController {
                 Date.valueOf(showCriteriaDTO.getDataStart()), Date.valueOf(showCriteriaDTO.getDataEnd()));
     }
 
-    @RequestMapping(value = "/add")
-    public String addEntry(@RequestBody EntryFormDTO entryFormDTO) {
-        System.out.println(entryFormDTO.toString());
-        return "response";
-    }
 
-//    private LocalDate changeDate(String dateToSplit) {
-//        String[] dateSplit = dateToSplit.split("-");
-//        int year = Integer.parseInt(dateSplit[0]);
-//        int month = Integer.parseInt(dateSplit[1]);
-//        int day = Integer.parseInt(dateSplit[2]);
-//        return LocalDate.of(year, month, day);
-//    }
 
 }
