@@ -17,10 +17,30 @@ $(document).ready(function () {
         event.preventDefault();
         $("#add-form").hide();
         addAjax();
-    })
+    });
+
+    $("#edit-form").submit(function (event) {
+        console.log("EDIT FORM");
+        event.preventDefault();
+        $("#edit-form").hide();
+        editAjax();
+    });
 
 });
 
+function onClickButton(objButton) {
+    //console.log("ON CLICK BUTTON FUNC");
+
+    if(objButton.className == 'edit') {
+        console.log("EDIT: " + objButton.value);
+        $("#edit-form").show();
+    }
+
+    if(objButton.className == 'delete') {
+        console.log("DELETE: " + objButton.value);
+    }
+
+}
 
 
 function showAjax() {
@@ -58,17 +78,16 @@ function showAjax() {
 
     function drawRow(rowData) {
         //console.log("ROW: ", rowData);
-        var row = $("<tr />").addClass("entry-" + rowData.index);
+        var row = $("<tr />").addClass("entry" + rowData.index);
         $("#entriesTable").append(row);
-        row.append($("<td>" + rowData.index + "</td>"));
         row.append($("<td>" + rowData.date + "</td>"));
         row.append($("<td>" + rowData.startTime + "</td>"));
         row.append($("<td>" + rowData.endTime + "</td>"));
         row.append($("<td>" + rowData.time + "</td>"));
         row.append($("<td>" + rowData.approve + "</td>"));
         row.append($("<td>" + rowData.username + "</td>"));
-        row.append($("<td>" + "<button class=\"edit\">" + "EDIT" + "</button>" + "</td>"));
-        row.append($("<td> <button class=\"delete\">" + "DELETE" + "</button> </td>"));
+        row.append($("<td>" + "<button class='edit' onclick='onClickButton(this)' value=" + rowData.index + ">" + "EDIT" + "</button>" + "</td>"));
+        row.append($("<td> <button class='delete' onclick='onClickButton(this)' value=" + rowData.index + ">" + "DELETE" + "</button> </td>"));
     }
 
 }
@@ -79,7 +98,7 @@ function addAjax() {
     add["date"] = $("#add-form-date").val();
     add["timeStart"] = $("#add-form-time-start").val();
     add["timeEnd"] = $("#add-form-time-end").val();
-    console.log("SEND", add)
+    console.log("SEND", add);
 
     $.ajax({
         type: "POST",
@@ -99,4 +118,34 @@ function addAjax() {
             console.log("ERROR: ", e);
         }
     });
+}
+
+
+function editAjax() {
+
+    var edit = {};
+    edit["date"] = $("#edit-form-date").val();
+    edit["timeStart"] = $("#edit-form-time-start").val();
+    edit["timeEnd"] = $("#edit-form-time-end").val();
+    console.log("SEND", edit);
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/ajax/command/edit",
+        data: JSON.stringify(edit),
+        dataType: 'json',
+        timeout: 100000,
+
+        beforeSend: function () {
+            console.log("SEND EDIT");
+        },
+        success: function (d) {
+            console.log("SUCCESS: ", d);
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+
 }

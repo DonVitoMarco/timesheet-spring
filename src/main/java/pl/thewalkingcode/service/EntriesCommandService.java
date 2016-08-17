@@ -6,12 +6,20 @@ import org.springframework.stereotype.Component;
 import pl.thewalkingcode.model.EntryCommandDTO;
 import pl.thewalkingcode.model.EntryFormDTO;
 
+import java.sql.Date;
+
 
 @Component
 public class EntriesCommandService implements IEntriesCommandService {
 
     private static final String INSERT_ENTRY = "INSERT INTO entries (date, time, start, end, user_id) " +
             "VALUES (?, ?, ?, ?, (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?))";
+
+    private static final String EDIT_ENTRY = "UPDATE entries SET entries.START = ?, entries.END = ?, " +
+            "entries.TIME = ? WHERE entries.DATE = ? AND entries.USER_ID = (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?)";
+
+    private static final String CHECK_ENTRY = "SELECT COUNT(*) FROM entries WHERE entries.DATE = ? AND " +
+            "entries.USER_ID = (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?)";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -22,17 +30,42 @@ public class EntriesCommandService implements IEntriesCommandService {
 
     @Override
     public void addNewEntry(EntryFormDTO entryFormDTO, String username) {
+        EntryCommandDTO entry = convertEntryFormDTOToCommandDTO(entryFormDTO, username);
+        //TODO
+        System.out.println("ADD: " + entry.toString());
+        System.out.println(checkExistEntry(entry.getDate(), entry.getUsername()));
+
+        if(!checkExistEntry(entry.getDate(), entry.getUsername())) {
+            jdbcTemplate.update(INSERT_ENTRY, entry.getDate(), entry.getTime(),
+                    entry.getStartTime(), entry.getEndTime(), entry.getUsername());
+        }
+    }
+
+    public void editEntry(EntryFormDTO entryFormDTO, String username) {
+        EntryCommandDTO entry = convertEntryFormDTOToCommandDTO(entryFormDTO, username);
+        //TODO
+        System.out.println("EDIT: " + entry.toString());
+        System.out.println(checkExistEntry(entry.getDate(), entry.getUsername()));
+
+        if(checkExistEntry(entry.getDate(), entry.getUsername())) {
+            jdbcTemplate.update(EDIT_ENTRY, entry.getStartTime(), entry.getEndTime(),
+                    entry.getTime(), entry.getDate(), entry.getUsername());
+        }
+    }
+
+    private EntryCommandDTO convertEntryFormDTOToCommandDTO(EntryFormDTO entryFormDTO, String username) {
         EntryCommandDTO entry = new EntryCommandDTO.EntryCommandDTOBuilder()
                 .addDate(entryFormDTO.getDate())
                 .addStartTime(entryFormDTO.getTimeStart())
                 .addEndTime(entryFormDTO.getTimeEnd())
                 .addUsername(username)
                 .build();
-        //TODO logger
-        System.out.println(entry.toString());
+        return entry;
+    }
 
-        jdbcTemplate.update(INSERT_ENTRY, entry.getDate(), entry.getTime(),
-                entry.getStartTime(), entry.getEndTime(), entry.getUsername());
+    private boolean checkExistEntry(Date date, String username) {
+        Integer count = jdbcTemplate.queryForObject(CHECK_ENTRY, Integer.class, date, username);
+        return count != null && count > 0;
     }
 
 }

@@ -80,3 +80,7 @@ td, th {
 #add-form {
     display: none;
 }
+
+#edit-form {
+    display: none;
+}
