@@ -17,12 +17,14 @@ public class EntriesQueryService implements IEntriesQueryService {
 
     private static final String GET_ENTRIES = "SELECT entries.*, users.USERNAME FROM entries INNER JOIN users ON entries.USER_ID = users.USER_ID WHERE users.USERNAME = ? AND entries.DATE BETWEEN ? AND ?";
 
+
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public EntriesQueryService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
 
     @Override
     public EntryQueryDTO getEntryByIndex(String username, int index) {

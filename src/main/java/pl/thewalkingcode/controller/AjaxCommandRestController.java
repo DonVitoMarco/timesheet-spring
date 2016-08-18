@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.thewalkingcode.model.EntryDeleteFormDTO;
 import pl.thewalkingcode.model.EntryFormDTO;
 import pl.thewalkingcode.service.IEntriesCommandService;
 
@@ -20,6 +21,7 @@ public class AjaxCommandRestController {
         this.commandService = commandService;
     }
 
+
     @RequestMapping(value = "/add")
     public String addEntry(@RequestBody EntryFormDTO entryFormDTO) {
         System.out.println("ENTRY FORM DTO: " + entryFormDTO.toString());
@@ -32,6 +34,14 @@ public class AjaxCommandRestController {
     public String editEntry(@RequestBody EntryFormDTO entryFormDTO) {
         System.out.println("ENTRY FORM DTO: " + entryFormDTO.toString());
         commandService.editEntry(entryFormDTO,
+                SecurityContextHolder.getContext().getAuthentication().getName());
+        return "response";
+    }
+
+    @RequestMapping(value = "/del")
+    public String delEntry(@RequestBody EntryDeleteFormDTO entryDeleteFormDTO) {
+        System.out.println(entryDeleteFormDTO.toString());
+        commandService.deleteEntry(entryDeleteFormDTO,
                 SecurityContextHolder.getContext().getAuthentication().getName());
         return "response";
     }

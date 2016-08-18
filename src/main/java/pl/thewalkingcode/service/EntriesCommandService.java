@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import pl.thewalkingcode.model.EntryCommandDTO;
+import pl.thewalkingcode.model.EntryDeleteFormDTO;
 import pl.thewalkingcode.model.EntryFormDTO;
 
 import java.sql.Date;
@@ -14,12 +15,13 @@ public class EntriesCommandService implements IEntriesCommandService {
 
     private static final String INSERT_ENTRY = "INSERT INTO entries (date, time, start, end, user_id) " +
             "VALUES (?, ?, ?, ?, (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?))";
-
     private static final String EDIT_ENTRY = "UPDATE entries SET entries.START = ?, entries.END = ?, " +
             "entries.TIME = ? WHERE entries.DATE = ? AND entries.USER_ID = (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?)";
-
     private static final String CHECK_ENTRY = "SELECT COUNT(*) FROM entries WHERE entries.DATE = ? AND " +
             "entries.USER_ID = (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?)";
+    private static final String DELETE_ENTRY = "DELETE FROM entries WHERE entries.USER_ID = " +
+            "(SELECT users.USER_ID FROM users WHERE users.USERNAME = ?) AND entries.DATE = ? AND entries.ENTRIES_ID = ?";
+
 
     private JdbcTemplate jdbcTemplate;
 
@@ -27,6 +29,7 @@ public class EntriesCommandService implements IEntriesCommandService {
     public EntriesCommandService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
 
     @Override
     public void addNewEntry(EntryFormDTO entryFormDTO, String username) {
@@ -51,6 +54,10 @@ public class EntriesCommandService implements IEntriesCommandService {
             jdbcTemplate.update(EDIT_ENTRY, entry.getStartTime(), entry.getEndTime(),
                     entry.getTime(), entry.getDate(), entry.getUsername());
         }
+    }
+
+    public int deleteEntry(EntryDeleteFormDTO entryDeleteFormDTO, String username) {
+        return jdbcTemplate.update(DELETE_ENTRY, username, entryDeleteFormDTO.getDate(), entryDeleteFormDTO.getIndex());
     }
 
     private EntryCommandDTO convertEntryFormDTOToCommandDTO(EntryFormDTO entryFormDTO, String username) {
