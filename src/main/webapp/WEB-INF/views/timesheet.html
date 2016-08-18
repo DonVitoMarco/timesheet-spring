@@ -25,24 +25,81 @@
 <body>
 
     <div id="sidebar">
-        <i id="navico" class="fa fa-bars fa-2x" aria-hidden="true"></i>
+        <i id="navico" class="fa fa-bars fa-2x" aria-hidden="true"></i><br>
+
+        <div id="logo">
+            <i class="fa fa-clock-o fa-5x" aria-hidden="true"></i>
+        </div>
+
+        <div id="main-menu">
+            <a sec:authorize="isAuthenticated()" th:href="@{/}">HOME</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/manage}">MANAGE</a>
+        </div>
+
+        <div id="login-menu">
+            <a sec:authorize="isAuthenticated()" th:href="@{/logout}">LOGOUT</a>
+        </div>
     </div>
 
     <div id="wrapper">
-        <h1>TIMESHEET</h1>
-        <div sec:authorize="isAuthenticated()">
-            Witaj <span sec:authentication="name">user</span>!<br>
-            Roles <span sec:authentication="authorities">auth</span>
+        <div id="title-name">
+            <h1>TIMESHEET</h1>
         </div>
-        <a th:href="@{/logout}" class="btn">LOG OUT</a>
+        <div id="title-info" sec:authorize="isAuthenticated()">
+            <p><i class="fa fa-user" aria-hidden="true"></i>
+                 Hello <span sec:authentication="name">user</span>! <span sec:authentication="authorities">auth</span></p>
+        </div>
+        <div class="clear"></div>
+
         <hr>
-        <h1>SHOW</h1>
+
         <form id="show-form">
-            DATA START: <input type="date" id="data-start"><br>
-            DATA END: <input type="date" id="data-end"><br>
-            <button type="submit" id="bth-show">SHOW</button>
+            <h3><i class="fa fa-search" aria-hidden="true"></i> SEARCH ENTRIES</h3>
+            <table id="search-table-form">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DATE START: </td>
+                        <td><input type="date" id="data-start"></td>
+                    </tr>
+                    <tr>
+                        <td>DATE END: </td>
+                        <td><input type="date" id="data-end"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center;"><button type="submit" class="bth">SEARCH</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </form>
+        <form id="add-form">
+            <h3><i class="fa fa-plus" aria-hidden="true"></i> ADD ENTRY</h3>
+            <table id="add-table-form">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DATE: </td>
+                        <td colspan="2"><input type="date" id="add-form-date"></td>
+                    </tr>
+                    <tr>
+                        <td>TIME: </td>
+                        <td>
+                            <input type="time" id="add-form-time-start" value="08:00">
+                            <input type="time" id="add-form-time-end" value="16:00">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: center;"><input class="bth" type="submit" id="add-form-submit" value="ADD"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <div class="clear"></div>
+
         <hr>
+
         <table id="entriesTable">
             <thead>
                 <tr>
@@ -59,12 +116,7 @@
         </table>
         <hr>
         <button id="add-form-button" type="button">NEW ENTRY</button>
-        <form id="add-form">
-            DATA: <input type="date" id="add-form-date"><br>
-            TIME START: <input type="time" id="add-form-time-start" value="08:00"><br>
-            TIME END: <input type="time" id="add-form-time-end" value="16:00"><br>
-            <input type="submit" id="add-form-submit" value="ADD">
-        </form>
+
         <hr>
         <form id="edit-form">
             <h3>EDIT: </h3>

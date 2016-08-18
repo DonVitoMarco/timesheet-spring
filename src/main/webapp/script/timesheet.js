@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     $("#data-start").val(getCurrentDay());
     $("#data-end").val(getCurrentDay());
+    $("#add-form-date").val(getCurrentDay());
 
     $("#show-form").submit(function (event) {
         console.log("SHOW FORM");
@@ -10,16 +11,10 @@ $(document).ready(function () {
         showAjax();
     });
 
-    $("#add-form-button").click(function () {
-        console.log("ADD FORM BUTTON");
-        $("#add-form").show();
-        $("#add-form-date").val(getCurrentDay());
-    });
 
     $("#add-form").submit(function (event) {
         console.log("ADD FORM");
         event.preventDefault();
-        $("#add-form").hide();
         addAjax();
     });
 
@@ -100,8 +95,10 @@ function showAjax() {
         row.append($("<td class='time'>" + rowData.time + "</td>"));
         row.append($("<td class='approve'>" + rowData.approve + "</td>"));
         row.append($("<td class='username'>" + rowData.username + "</td>"));
-        row.append($("<td>" + "<button class='edit' onclick='onClickButton(this)' value=" + rowData.index + ">" + "EDIT" + "</button>" + "</td>"));
-        row.append($("<td> <button class='delete' onclick='onClickButton(this)' value=" + rowData.index + ">" + "DELETE" + "</button> </td>"));
+        row.append($("<td>" + "<button class='edit' onclick='onClickButton(this)' value=" +
+            rowData.index + ">" + "<i class='fa fa-pencil' aria-hidden='true'></i> " + "</button>" + "</td>"));
+        row.append($("<td> <button class='delete' onclick='onClickButton(this)' value=" +
+            rowData.index + ">" + "<i class='fa fa-trash-o' aria-hidden='true'></i> " + "</button> </td>"));
     }
 
 }

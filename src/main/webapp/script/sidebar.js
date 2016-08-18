@@ -9,6 +9,7 @@ $(document).ready(function() {
             $("#navico").removeClass('fa-arrow-left').addClass('fa-bars');
             $("#login-menu").hide();
             $("#main-menu").hide();
+            $("#logo").hide();
         } else {
             $("#sidebar").animate({
                 width: '165px'
@@ -16,6 +17,7 @@ $(document).ready(function() {
             $("#login-menu").show();
             $("#main-menu").show();
             $("#navico").removeClass('fa-bars').addClass('fa-arrow-left');
+            $("#logo").show();
         }
     });
 
