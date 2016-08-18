@@ -96,9 +96,10 @@ function showAjax() {
         row.append($("<td class='approve'>" + rowData.approve + "</td>"));
         row.append($("<td class='username'>" + rowData.username + "</td>"));
         row.append($("<td>" + "<button class='edit' onclick='onClickButton(this)' value=" +
-            rowData.index + ">" + "<i class='fa fa-pencil' aria-hidden='true'></i> " + "</button>" + "</td>"));
-        row.append($("<td> <button class='delete' onclick='onClickButton(this)' value=" +
-            rowData.index + ">" + "<i class='fa fa-trash-o' aria-hidden='true'></i> " + "</button> </td>"));
+            rowData.index + ">" + "<i class='fa fa-pencil' aria-hidden='true'></i> " + "</button>" +
+            "<button class='delete' onclick='onClickButton(this)' value=" + rowData.index + ">" +
+            "<i class='fa fa-trash-o' aria-hidden='true'></i> " + "</button> </td>"));
+
     }
 
 }
