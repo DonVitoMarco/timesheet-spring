@@ -64,6 +64,7 @@ function showAjax() {
         for(var i = 0; i < d.length; i++) {
             drawRow(d[i]);
         }
+        checkApprove();
     }
 
     function drawRow(rowData) {
@@ -195,4 +196,13 @@ function getCurrentDay() {
 
 function hideEditForm() {
     $("#edit-form").hide();
+}
+
+function checkApprove() {
+    var elem = document.getElementsByClassName('approve');
+    for(var i = 0; i < elem.length; i++) {
+        if(elem[i].innerHTML == 'false') {
+            elem[i].classList.add('error');
+        }
+    }
 }
