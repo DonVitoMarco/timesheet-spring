@@ -22,13 +22,14 @@
     <script src="../../script/timesheet.js"></script>
 
 </head>
-<body>
+<body onload="startTime()">
 
     <div id="sidebar">
-        <i id="navico" class="fa fa-bars fa-2x" aria-hidden="true"></i><br>
+        <i id="navico" class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
 
         <div id="logo">
             <i class="fa fa-clock-o fa-5x" aria-hidden="true"></i>
+            <div id="clock"></div>
         </div>
 
         <div id="main-menu">
@@ -48,14 +49,16 @@
         <div id="title-info" sec:authorize="isAuthenticated()">
             <p><i class="fa fa-user" aria-hidden="true"></i>
                  Hello <span sec:authentication="name">user</span>! <span sec:authentication="authorities">auth</span></p>
+            <div id="clock2"></div>
         </div>
+
         <div class="clear"></div>
 
         <hr>
 
         <form id="show-form">
             <h3><i class="fa fa-search" aria-hidden="true"></i> SEARCH ENTRIES</h3>
-            <table id="search-table-form">
+            <table class="formtable">
                 <thead>
                 </thead>
                 <tbody>
@@ -68,14 +71,14 @@
                         <td><input type="date" id="data-end"></td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="text-align: center;"><button type="submit" class="bth">SEARCH</button></td>
+                        <td colspan="2" style="text-align: center;"><button id="btn-search" type="submit" class="bth">SEARCH</button></td>
                     </tr>
                 </tbody>
             </table>
         </form>
         <form id="add-form">
             <h3><i class="fa fa-plus" aria-hidden="true"></i> ADD ENTRY</h3>
-            <table id="add-table-form">
+            <table class="formtable">
                 <thead>
                 </thead>
                 <tbody>
@@ -96,6 +99,7 @@
                 </tbody>
             </table>
         </form>
+
         <div class="clear"></div>
 
         <hr>
@@ -117,12 +121,32 @@
         <hr>
 
         <form id="edit-form">
-            <h3>EDIT: </h3>
-            DATA: <input type="date" id="edit-form-date"><br>
-            TIME START: <input type="time" id="edit-form-time-start" value=""><br>
-            TIME END: <input type="time" id="edit-form-time-end" value=""><br>
-            <input type="submit" id="edit-form-submit" value="EDIT">
+            <h3><i class="fa fa-pencil" aria-hidden="true"></i> EDIT ENTRY </h3>
+            <table class="formtable">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DATA: </td>
+                        <td colspan="2"><input type="date" id="edit-form-date"></td>
+                    </tr>
+                    <tr>
+                        <td>TIME: </td>
+                        <td>
+                            <input type="time" id="edit-form-time-start" value="">
+                            <input type="time" id="edit-form-time-end" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="text-align: center">
+                            <input class="bth" type="submit" id="edit-form-submit" value="EDIT">
+                            <button class="bth" action="hideEditForm()" value="CANCEL">CANCEL</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </form>
+
     </div>
 
 </body>

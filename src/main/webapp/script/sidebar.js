@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     $("#navico").click(function () {
         var width = $('#sidebar').css('width');
         if(width === '165px') {
@@ -20,5 +19,4 @@ $(document).ready(function() {
             $("#logo").show();
         }
     });
-
 });

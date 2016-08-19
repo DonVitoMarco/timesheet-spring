@@ -23,27 +23,24 @@ public class AjaxCommandRestController {
 
 
     @RequestMapping(value = "/add")
-    public String addEntry(@RequestBody EntryFormDTO entryFormDTO) {
+    public void addEntry(@RequestBody EntryFormDTO entryFormDTO) {
         System.out.println("ENTRY FORM DTO: " + entryFormDTO.toString());
         commandService.addNewEntry(entryFormDTO,
                 SecurityContextHolder.getContext().getAuthentication().getName());
-        return "response";
     }
 
     @RequestMapping(value = "/edit")
-    public String editEntry(@RequestBody EntryFormDTO entryFormDTO) {
+    public void editEntry(@RequestBody EntryFormDTO entryFormDTO) {
         System.out.println("ENTRY FORM DTO: " + entryFormDTO.toString());
         commandService.editEntry(entryFormDTO,
                 SecurityContextHolder.getContext().getAuthentication().getName());
-        return "response";
     }
 
     @RequestMapping(value = "/del")
-    public String delEntry(@RequestBody EntryDeleteFormDTO entryDeleteFormDTO) {
+    public void delEntry(@RequestBody EntryDeleteFormDTO entryDeleteFormDTO) {
         System.out.println(entryDeleteFormDTO.toString());
         commandService.deleteEntry(entryDeleteFormDTO,
                 SecurityContextHolder.getContext().getAuthentication().getName());
-        return "response";
     }
 
 }

@@ -13,95 +13,7 @@ html, body {
 h1 {
     margin: 0;
     font-weight: 300;
-}
-
-#sidebar {
-    position: fixed;
-    height: 100%;
-    width: 65px;
-    background-color: #13395a;
-    color: white;
-    overflow: hidden;
-    z-index: 10;
-    text-align: center;
-}
-
-#navico {
-    position: relative;
-    top: 5px;
-}
-
-#logo {
-    position: relative;
-    display: none;
-    top: 8%;
-}
-
-#wrapper {
-    height: 100%;
-    width: 75%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#login-menu, #main-menu {
-    display: none;
-    position: relative;
-    top: 60%;
-    width: 100%;
-    text-align: center;
-}
-
-#login-menu a, #main-menu a {
-    font-size: 1.5em;
-    font-weight: 400;
-    color: white;
-    text-decoration: none;
-    line-height: 1.8;
-}
-
-#main-menu {
-    top: 12%;
-}
-
-#content-login {
-    text-align: center;
-    padding-top: 12%;
-}
-
-#login-box {
-    display: inline-block;
-    text-align: center;
-    padding: 30px;
-    background-color: darkslategrey;
-    border-radius: 10px;
-    color: white;
-}
-
-#add-form {
-    /*display: none;*/
-    float: left;
-}
-
-#edit-form {
-    display: none;
-}
-
-#title-name {
-    margin-top: 35px;
-    float: left;
-    width: 30%;
-}
-
-#title-info {
-    margin-top: 37px;
-    float: right;
-    width: 25%;
-}
-
-h1 {
     font-size: 55px;
-    font-weight: 300;
 }
 
 h3 {
@@ -116,31 +28,12 @@ hr {
 
 p {
     font-size: 20px;
+    margin-top: 8px;
+    margin-bottom: 5px;
 }
 
 .clear {
     clear: both;
-}
-
-#show-form {
-    float: left;
-    margin-left: 20px;
-    width: 400px;
-    height: auto;
-    margin-bottom: 10px;
-}
-
-table#search-table-form td, table#add-table-form td {
-    text-align: left;
-}
-
-table#search-table-form, table#add-table-form {
-    margin-left: 10px;
-    border-spacing: 5px;
-}
-
-input[type=time] {
-    width: 78.5px;
 }
 
 .bth {
@@ -159,10 +52,124 @@ input[type=time] {
 .bth:hover {
     background-color: #124869;
 }
+
 .bth:active {
     position: relative;
     top: 1px;
     left: 1px;
+}
+
+input[type=time] {
+    width: 78.5px;
+}
+
+.edit, .delete {
+    margin: 0 10%;
+}
+
+/*-------------------- SIDEBAR --------------------*/
+#sidebar {
+    position: fixed;
+    height: 100%;
+    width: 165px;
+    background-color: #13395a;
+    color: white;
+    overflow: hidden;
+    z-index: 10;
+    text-align: center;
+}
+
+#navico {
+    position: relative;
+    top: 5px;
+}
+
+#logo {
+    position: relative;
+    top: 8%;
+}
+
+#login-menu, #main-menu {
+    position: relative;
+    top: 60%;
+    width: 100%;
+    text-align: center;
+}
+
+#login-menu a, #main-menu a {
+    font-size: 1.5em;
+    font-weight: 400;
+    color: white;
+    text-decoration: none;
+    line-height: 1.8;
+}
+
+#main-menu {
+    top: 12%;
+}
+
+/*-------------------- LOGIN --------------------*/
+#content-login {
+    text-align: center;
+    padding-top: 12%;
+}
+
+#login-box {
+    display: inline-block;
+    text-align: center;
+    padding: 30px;
+    background-color: darkslategrey;
+    border-radius: 10px;
+    color: white;
+}
+
+/*-------------------- CONTENT --------------------*/
+#wrapper {
+    height: 100%;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#add-form {
+    float: left;
+}
+
+#edit-form {
+    display: none;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid lightgrey;
+}
+
+#title-name {
+    margin-top: 35px;
+    float: left;
+    width: 25%;
+}
+
+#title-info {
+    margin-top: 37px;
+    float: right;
+    width: 26%;
+}
+
+#show-form {
+    float: left;
+    margin-left: 20px;
+    width: 400px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/*-------------------- TABLE --------------------*/
+.formtable td {
+    text-align: left;
+}
+
+.formtable {
+    margin-left: 10px;
+    border-spacing: 5px;
 }
 
 table#entriesTable tr {
@@ -177,10 +184,7 @@ table#entriesTable th, table#entriesTable td {
 table#entriesTable tr:nth-child(even) {
     background-color: #eeeeee;
 }
+
 table#entriesTable tr:nth-child(odd) {
     background-color: #f7f7f7;
-}
-
-.edit, .delete {
-    margin: 0 10%;
 }

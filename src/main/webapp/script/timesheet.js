@@ -1,66 +1,47 @@
+//-------------------------------------- DOC READY --------------------------------------
 $(document).ready(function () {
-
     $("#data-start").val(getCurrentDay());
     $("#data-end").val(getCurrentDay());
     $("#add-form-date").val(getCurrentDay());
 
+
     $("#show-form").submit(function (event) {
-        console.log("SHOW FORM");
         event.preventDefault();
         $("#entriesTable > tr").remove();
         showAjax();
     });
 
-
     $("#add-form").submit(function (event) {
-        console.log("ADD FORM");
         event.preventDefault();
         addAjax();
     });
 
     $("#edit-form").submit(function (event) {
-        console.log("EDIT FORM");
         event.preventDefault();
         $("#edit-form").hide();
         editAjax();
     });
-
 });
 
-function getCurrentDay() {
-    var date = new Date();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var output = date.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
-    return output;
-}
-
-
 function onClickButton(objButton) {
-    //console.log("ON CLICK BUTTON FUNC");
-
     if(objButton.className == 'edit') {
         var c = document.getElementById("entry" + objButton.value).childNodes;
-        $("#edit-form").show();
+        var p = $("#entry" + objButton.value + " td:last-child").position();
+        $('#edit-form').css({position: 'absolute', top: p.top + 15, left: p.left - 50}).show();
         $("#edit-form-date").val(c[0].innerHTML).prop('disabled', true);
         $("#edit-form-time-start").val(c[1].innerHTML);
         $("#edit-form-time-end").val(c[2].innerHTML);
     }
-
     if(objButton.className == 'delete') {
-        console.log("DELETE: " + objButton.value);
-        deleteEntry(objButton.value);
+        deleteEntryAjax(objButton.value);
     }
-
 }
 
-
+//-------------------------------------- AJAX --------------------------------------
 function showAjax() {
-
     var data = {};
     data["dataStart"] = $("#data-start").val();
     data["dataEnd"] = $("#data-end").val();
-    //console.log("DATA: ", data);
 
     $.ajax({
         type: "POST",
@@ -71,7 +52,7 @@ function showAjax() {
         timeout: 100000,
 
         success: function (d) {
-            //console.log("SUCCESS: ", d);
+            console.log("SUCCESS: ", d);
             drawTable(d);
         },
         error: function (e) {
@@ -86,7 +67,6 @@ function showAjax() {
     }
 
     function drawRow(rowData) {
-        //console.log("ROW: ", rowData);
         var row = $("<tr />").attr("id", "entry" + rowData.index);
         $("#entriesTable").append(row);
         row.append($("<td class='date'>" + rowData.date + "</td>"));
@@ -99,18 +79,14 @@ function showAjax() {
             rowData.index + ">" + "<i class='fa fa-pencil' aria-hidden='true'></i> " + "</button>" +
             "<button class='delete' onclick='onClickButton(this)' value=" + rowData.index + ">" +
             "<i class='fa fa-trash-o' aria-hidden='true'></i> " + "</button> </td>"));
-
     }
-
 }
 
 function addAjax() {
-
     var add = {};
     add["date"] = $("#add-form-date").val();
     add["timeStart"] = $("#add-form-time-start").val();
     add["timeEnd"] = $("#add-form-time-end").val();
-    console.log("SEND", add);
 
     $.ajax({
         type: "POST",
@@ -120,9 +96,6 @@ function addAjax() {
         dataType: 'json',
         timeout: 100000,
 
-        beforeSend: function () {
-            console.log("SEND ADD");
-        },
         success: function (d) {
             console.log("SUCCESS: ", d);
         },
@@ -132,14 +105,11 @@ function addAjax() {
     });
 }
 
-
 function editAjax() {
-
     var edit = {};
     edit["date"] = $("#edit-form-date").val();
     edit["timeStart"] = $("#edit-form-time-start").val();
     edit["timeEnd"] = $("#edit-form-time-end").val();
-    console.log("SEND", edit);
 
     $.ajax({
         type: "POST",
@@ -149,9 +119,6 @@ function editAjax() {
         dataType: 'json',
         timeout: 100000,
 
-        beforeSend: function () {
-            console.log("SEND EDIT");
-        },
         success: function (d) {
             console.log("SUCCESS: ", d);
         },
@@ -161,13 +128,10 @@ function editAjax() {
     });
 }
 
-function deleteEntry(index) {
-
-    var c = document.getElementById("entry" + index).childNodes;
+function deleteEntryAjax(index) {
     var del = {};
     del["index"] = index;
-    del["date"] = c[0].innerHTML;
-    console.log(del);
+    del["date"] = document.getElementById("entry" + index).childNodes.innerHTML;
 
     $.ajax({
         type: "POST",
@@ -177,9 +141,6 @@ function deleteEntry(index) {
         dataType: 'json',
         timeout: 100000,
 
-        beforeSend: function () {
-            console.log("SEND DEL");
-        },
         success: function (d) {
             console.log("SUCCESS: ", d);
         },
@@ -187,6 +148,51 @@ function deleteEntry(index) {
             console.log("ERROR: ", e);
         }
     });
+}
 
+//-------------------------------------- FUNC --------------------------------------
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    var y = today.getFullYear();
+    var d = today.getDate();
+    var w = getWeekDay(today);
+    var o = getMonthDay(today);
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('clock').innerHTML =
+        h + ":" + m + ":" + s;
+    document.getElementById('clock2').innerHTML =
+        w + " " + o + " " + d + " " + y + " " + h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+}
 
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};
+    return i;
+}
+
+function getWeekDay(date) {
+    var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+    return days[ date.getDay() ];
+}
+
+function getMonthDay(date) {
+    var days = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return days[ date.getMonth() ];
+}
+
+function getCurrentDay() {
+    var date = new Date();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var output = date.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+    return output;
+}
+
+function hideEditForm() {
+    $("#edit-form").hide();
 }
