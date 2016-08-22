@@ -18,13 +18,27 @@
 <body onload="document.f.username.focus()">
 
     <div id="content-login">
-    <div id="login-box">
-        <h1>LOGIN PAGE</h1>
-        <form name="f" th:action="@{/login}" method="POST">
-            USERNAME: <input type="text" name="username" value=""><br>
-            PASSWORD: <input type="password" name="password" value=""><br>
-            <input name="submit" type="submit" value="LOGIN">
-        </form>
+        <div id="login-box">
+            <h1>LOGIN</h1>
+            <form class="formtable" name="f" th:action="@{/login}" method="POST">
+                <table>
+                    <thead>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>USERNAME: </td>
+                            <td><input type="text" name="username" value=""></td>
+                        </tr>
+                        <tr>
+                            <td>PASSWORD: </td>
+                            <td><input type="password" name="password" value=""></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center"><input class="bth" name="submit" type="submit" value="LOGIN"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
 

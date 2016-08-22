@@ -1,4 +1,4 @@
-//-------------------------------------- DOC READY --------------------------------------
+//-------------------------------------- READY --------------------------------------
 $(document).ready(function () {
     $("#data-start").val(getCurrentDay());
     $("#data-end").val(getCurrentDay());
@@ -61,6 +61,12 @@ function showAjax() {
     });
 
     function drawTable(d) {
+        d.sort(function(a, b) {
+            a = new Date(a.date);
+            b = new Date(b.date);
+            return a>b ? -1 : a<b ? 1 : 0;
+        });
+
         for(var i = 0; i < d.length; i++) {
             drawRow(d[i]);
         }
@@ -99,6 +105,7 @@ function addAjax() {
 
         success: function (d) {
             console.log("SUCCESS: ", d);
+            document.getElementById("btn-search").click();
         },
         error: function (e) {
             console.log("ERROR: ", e);
@@ -122,6 +129,7 @@ function editAjax() {
 
         success: function (d) {
             console.log("SUCCESS: ", d);
+            document.getElementById("btn-search").click();
         },
         error: function (e) {
             console.log("ERROR: ", e);
@@ -132,7 +140,7 @@ function editAjax() {
 function deleteEntryAjax(index) {
     var del = {};
     del["index"] = index;
-    del["date"] = document.getElementById("entry" + index).childNodes.innerHTML;
+    del["date"] = document.getElementById("entry" + index).childNodes[0].innerHTML;
 
     $.ajax({
         type: "POST",
@@ -144,6 +152,7 @@ function deleteEntryAjax(index) {
 
         success: function (d) {
             console.log("SUCCESS: ", d);
+            document.getElementById("btn-search").click();
         },
         error: function (e) {
             console.log("ERROR: ", e);

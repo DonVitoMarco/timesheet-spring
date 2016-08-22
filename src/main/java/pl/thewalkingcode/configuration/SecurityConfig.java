@@ -1,14 +1,18 @@
 package pl.thewalkingcode.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.thewalkingcode.controller.ControllerComponentScanner;
 import pl.thewalkingcode.service.ServiceComponentScanner;
+import pl.thewalkingcode.validation.ValidationComponentScanner;
 
 import javax.sql.DataSource;
 
@@ -16,7 +20,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @Configuration
 @ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, ControllerComponentScanner.class,
-        ServiceComponentScanner.class})
+        ServiceComponentScanner.class, ValidationComponentScanner.class})
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -26,7 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery("SELECT users.USERNAME, users.PASSWORD, users.ENABLE FROM users WHERE users.USERNAME=?")
-                .authoritiesByUsernameQuery("SELECT users.USERNAME, roles.ROLES_NAME FROM users INNER JOIN roles ON users.ROLES_ID = roles.ROLES_ID WHERE users.USERNAME=?");
+                .authoritiesByUsernameQuery("SELECT users.USERNAME, roles.ROLES_NAME FROM users INNER JOIN roles ON users.ROLES_ID = roles.ROLES_ID WHERE users.USERNAME=?")
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -55,6 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .requiresChannel()
 //                    .antMatchers("/").requiresInsecure();
 
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

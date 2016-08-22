@@ -10,13 +10,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import pl.thewalkingcode.controller.ControllerComponentScanner;
 import pl.thewalkingcode.service.ServiceComponentScanner;
+import pl.thewalkingcode.validation.ValidationComponentScanner;
 
 import javax.sql.DataSource;
 
 
 @Configuration
 @ComponentScan(basePackageClasses = {ConfigurationComponentScanner.class, ControllerComponentScanner.class,
-        ServiceComponentScanner.class})
+        ServiceComponentScanner.class, ValidationComponentScanner.class})
 @PropertySource("classpath:db.properties")
 public class DataSourceConfiguration {
 

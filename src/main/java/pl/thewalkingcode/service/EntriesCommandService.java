@@ -32,7 +32,7 @@ public class EntriesCommandService implements IEntriesCommandService {
 
 
     @Override
-    public void addNewEntry(EntryFormDTO entryFormDTO, String username) {
+    public EntryCommandDTO addNewEntry(EntryFormDTO entryFormDTO, String username) {
         EntryCommandDTO entry = convertEntryFormDTOToCommandDTO(entryFormDTO, username);
         //TODO
         System.out.println("ADD: " + entry.toString());
@@ -42,9 +42,10 @@ public class EntriesCommandService implements IEntriesCommandService {
             jdbcTemplate.update(INSERT_ENTRY, entry.getDate(), entry.getTime(),
                     entry.getStartTime(), entry.getEndTime(), entry.getUsername());
         }
+        return entry;
     }
 
-    public void editEntry(EntryFormDTO entryFormDTO, String username) {
+    public EntryCommandDTO editEntry(EntryFormDTO entryFormDTO, String username) {
         EntryCommandDTO entry = convertEntryFormDTOToCommandDTO(entryFormDTO, username);
         //TODO
         System.out.println("EDIT: " + entry.toString());
@@ -54,9 +55,11 @@ public class EntriesCommandService implements IEntriesCommandService {
             jdbcTemplate.update(EDIT_ENTRY, entry.getStartTime(), entry.getEndTime(),
                     entry.getTime(), entry.getDate(), entry.getUsername());
         }
+        return entry;
     }
 
     public int deleteEntry(EntryDeleteFormDTO entryDeleteFormDTO, String username) {
+        System.out.println("DELETE: " + entryDeleteFormDTO);
         return jdbcTemplate.update(DELETE_ENTRY, username, entryDeleteFormDTO.getDate(), entryDeleteFormDTO.getIndex());
     }
 

@@ -17,13 +17,35 @@
 </head>
 <body onload="document.f.username.focus()">
 
+
+
+
+
 <div id="content-login">
     <div id="login-box">
-        <h1>REGISTER PAGE</h1>
-        <form name="f" th:action="@{/register}" th:object="${user}" method="POST">
-            USERNAME: <input type="text" th:field="*{username}" name="username" required="required" value=""><br>
-            PASSWORD: <input type="password" th:field="*{password}" name="password" required="required" value=""><br>
-            <input name="submit" type="submit" value="REGISTER">
+        <h1>REGISTER</h1>
+        <form class="formtable" name="f" th:action="@{/register}" th:object="${user}" method="POST">
+            <table>
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>USERNAME: </td>
+                        <td><input type="text" th:field="*{username}" name="username" required="required" value=""></td>
+                    </tr>
+                <tr>
+                    <td>PASSWORD: </td>
+                    <td><input type="password" th:field="*{password}" name="password" required="required" value=""></td>
+                </tr>
+                <tr>
+                    <td>CONFIRM PASSWORD: </td>
+                    <td><input type="password" th:field="*{matchingPassword}" name="password" required="required" value=""></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><input class="bth" name="submit" type="submit" value="REGISTER"></td>
+                </tr>
+                </tbody>
+            </table>
         </form>
     </div>
 </div>
