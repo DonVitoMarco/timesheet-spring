@@ -1,5 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-<html xmlns:th="http://www.thymeleaf.org">
+<html   xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
 <head>
 
@@ -9,15 +10,54 @@
 
     <!-- FONT -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="../../font/font-awesome-4.6.3/css/font-awesome.min.css">
 
     <!-- CSS -->
     <link type="text/css" rel="stylesheet" href="../../css/normalize.css" th:href="@{css/normalize.css}">
+    <link type="text/css" rel="stylesheet" href="../../font/font-awesome-4.6.3/css/font-awesome.css" th:href="@{font/font-awesome-4.6.3/css/font-awesome.min.css}">
     <link type="text/css" rel="stylesheet" href="../../css/style.css" th:href="@{css/style.css}">
+
+    <!-- SCRIPT -->
+    <script src="../../script/jquery-3.1.0.min.js"></script>
+    <script src="../../script/sidebar.js"></script>
+    <script src="../../script/manage.js"></script>
 
 </head>
 <body>
 
-    <h1>MANAGE</h1>
+    <div id="sidebar">
+        <i id="navico" class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
+
+        <div id="logo">
+            <i class="fa fa-clock-o fa-5x" aria-hidden="true"></i>
+            <div id="clock"></div>
+        </div>
+
+        <div id="main-menu">
+            <a sec:authorize="isAuthenticated()" th:href="@{/}">HOME</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/manage}">MANAGE</a>
+        </div>
+
+        <div id="login-menu">
+            <a sec:authorize="isAuthenticated()" th:href="@{/logout}">LOGOUT</a>
+        </div>
+    </div>
+
+    <div id="wrapper">
+        <div id="title-name">
+            <h1>MANAGE</h1>
+        </div>
+        <div id="title-info" sec:authorize="isAuthenticated()">
+            <p><i class="fa fa-user" aria-hidden="true"></i>
+                Hello <span sec:authentication="name">user</span>! <span sec:authentication="authorities">auth</span></p>
+            <div id="clock2"></div>
+        </div>
+        <div class="clear"></div>
+        <hr>
+
+
+
+    </div>
 
 </body>
 </html>

@@ -14,12 +14,19 @@
     <link type="text/css" rel="stylesheet" href="../../css/normalize.css" th:href="@{css/normalize.css}">
     <link type="text/css" rel="stylesheet" href="../../css/style.css" th:href="@{css/style.css}">
 
+    <!-- SCRIPT -->
+    <script src="../../script/jquery-3.1.0.min.js"></script>
+    <script src="../../script/login.js" th:src="@{script/login.js}"></script>
+
 </head>
 <body onload="document.f.username.focus()">
 
     <div id="content-login">
         <div id="login-box">
             <h1>LOGIN</h1>
+            <div id="errorbox">
+                Invalid Username or Password
+            </div>
             <form class="formtable" name="f" th:action="@{/login}" method="POST">
                 <table>
                     <thead>

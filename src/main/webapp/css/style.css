@@ -167,6 +167,15 @@ input[type=time] {
     margin-bottom: 10px;
 }
 
+#errorbox {
+    display: none;
+    background-color: #dd0000;
+    color: white;
+    margin: 12px 0;
+    padding: 4px;
+    font-weight: 400;
+}
+
 /*-------------------- TABLE --------------------*/
 .formtable td {
     text-align: left;
