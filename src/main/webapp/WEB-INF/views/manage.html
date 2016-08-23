@@ -21,21 +21,22 @@
     <script src="../../script/jquery-3.1.0.min.js"></script>
     <script src="../../script/sidebar.js"></script>
     <script src="../../script/manage.js"></script>
+    <script src="../../script/time.js"></script>
 
 </head>
-<body>
+<body onload="startTime()">
 
     <div id="sidebar">
         <i id="navico" class="fa fa-arrow-left fa-2x" aria-hidden="true"></i>
 
         <div id="logo">
-            <i class="fa fa-clock-o fa-5x" aria-hidden="true"></i>
+            <i class="fa fa-users fa-5x" aria-hidden="true"></i>
             <div id="clock"></div>
         </div>
 
         <div id="main-menu">
             <a sec:authorize="isAuthenticated()" th:href="@{/}">HOME</a>
-            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/manage}">MANAGE</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/timesheet}">TIMESHEET</a>
         </div>
 
         <div id="login-menu">
@@ -53,9 +54,68 @@
             <div id="clock2"></div>
         </div>
         <div class="clear"></div>
+
         <hr>
 
+        <div id="main-panel">
+            <div id="users-button" onclick="users()" class="box"><i class="fa fa-user" aria-hidden="true"></i><p>USERS</p></div>
+            <div id="entries-button" onclick="entries()" class="box"><i class="fa fa-check" aria-hidden="true"></i><p>ENTRIES</p></div>
+            <div id="departments-button" onclick="departments()" class="box"><i class="fa fa-building" aria-hidden="true"></i><p>DEPART</p></div>
+        </div>
 
+        <hr>
+
+        <div id="content">
+            <table style="display: none;" id="usersTable" class="content-table">
+                <thead>
+                    <tr>
+                        <th>USERNAME</th>
+                        <th>ENABLE</th>
+                        <th>ROLE_NAME</th>
+                        <th>DEPARTMENT_NAME</th>
+                    </tr>
+                </thead>
+            </table>
+            <table style="display: none;" id="entriesTable" class="content-table">
+                <thead>
+                <tr>
+                    <th>DATE</th>
+                    <th>START_TIME</th>
+                    <th>END_TIME</th>
+                    <th>TIME</th>
+                    <th>APPROVE</th>
+                    <th>USERNAME</th>
+                    <th></th>
+                </tr>
+                </thead>
+            </table>
+            <div id="departmentsList"></div>
+        </div>
+
+        <form id="entries-form">
+            <h3><i class="fa fa-search" aria-hidden="true"></i> SEARCH ENTRIES </h3>
+            <table class="formtable">
+                <thead>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>DATA_START: </td>
+                    <td colspan="2"><input type="date" id="entries-form-date-start"></td>
+                </tr>
+                <tr>
+                    <td>DATA_END: </td>
+                    <td colspan="2"><input type="date" id="entries-form-date-end"></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: center">
+                        <input class="bth" type="submit" id="entries-form-submit" value="SEARCH"/>
+
+                        <button type="button" class="bth" onclick="hideEntriesForm()" value="CANCEL">CANCEL</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
 
     </div>
 

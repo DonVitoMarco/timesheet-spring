@@ -15,8 +15,10 @@ import java.util.List;
 @Component
 public class EntriesQueryService implements IEntriesQueryService {
 
-    private static final String GET_ENTRIES = "SELECT entries.*, users.USERNAME FROM entries INNER JOIN users ON entries.USER_ID = users.USER_ID WHERE users.USERNAME = ? AND entries.DATE BETWEEN ? AND ?";
-
+    private static final String GET_ENTRIES = "SELECT entries.*, users.USERNAME FROM entries " +
+            "INNER JOIN users ON entries.USER_ID = users.USER_ID WHERE users.USERNAME = ? AND entries.DATE BETWEEN ? AND ?";
+    private static final String GET_ALL_ENTRIES = "SELECT entries.*, users.USERNAME FROM entries " +
+            "INNER JOIN users ON entries.USER_ID = users.USER_ID WHERE users.USERNAME LIKE '%' AND entries.DATE BETWEEN ? AND ?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -48,6 +50,31 @@ public class EntriesQueryService implements IEntriesQueryService {
                 return entry;
             }
         }, username, startDate, endDate);
+
+        //TODO logger
+        for(EntryQueryDTO entry : listEntries) {
+            System.out.println(entry.toString());
+        }
+
+        return listEntries;
+    }
+
+    public List<EntryQueryDTO> getAllEntriesAllUsers(Date startDate, Date endDate) {
+
+        //TODO lambda
+        List<EntryQueryDTO> listEntries = jdbcTemplate.query(GET_ALL_ENTRIES, new RowMapper<EntryQueryDTO>() {
+            public EntryQueryDTO mapRow(ResultSet result, int rowNum) throws SQLException {
+                EntryQueryDTO entry = new EntryQueryDTO();
+                entry.setIndex(result.getInt("ENTRIES_ID"));
+                entry.setUsername(result.getString("USERNAME"));
+                entry.setDate(result.getDate("DATE"));
+                entry.setTime(result.getTime("TIME"));
+                entry.setStartTime(result.getTime("START"));
+                entry.setEndTime(result.getTime("END"));
+                entry.setApprove(result.getBoolean("APPROVE"));
+                return entry;
+            }
+        }, startDate, endDate);
 
         //TODO logger
         for(EntryQueryDTO entry : listEntries) {

@@ -71,6 +71,10 @@ input[type=time] {
     color: red;
 }
 
+.check {
+    color: limegreen;
+}
+
 /*-------------------- SIDEBAR --------------------*/
 #sidebar {
     position: fixed;
@@ -110,6 +114,11 @@ input[type=time] {
 
 #main-menu {
     top: 12%;
+}
+
+#clock {
+    margin-top: 10px;
+    font-size: 18px;
 }
 
 /*-------------------- LOGIN --------------------*/
@@ -167,6 +176,13 @@ input[type=time] {
     margin-bottom: 10px;
 }
 
+#entries-form {
+    background-color: white;
+    display: none;
+    padding: 20px;
+    border: 1px solid lightgrey;
+}
+
 #errorbox {
     display: none;
     background-color: #dd0000;
@@ -187,7 +203,7 @@ input[type=time] {
     text-align: left;
 }
 
-table#entriesTable tr {
+.content-table tr {
     height: 40px;
 }
 
@@ -196,10 +212,59 @@ table#entriesTable th, table#entriesTable td {
     text-align: center;
 }
 
-table#entriesTable tr:nth-child(even) {
+table#usersTable th, table#usersTable td {
+    width: 6%;
+    text-align: center;
+}
+
+.content-table tr:nth-child(even) {
     background-color: #eeeeee;
 }
 
-table#entriesTable tr:nth-child(odd) {
+.content-table tr:nth-child(odd) {
     background-color: #f7f7f7;
+}
+
+
+
+/*-------------------- MANAGE --------------------*/
+#main-panel {
+    width: 100%;
+}
+
+.box {
+    height: 50px;
+    width: 50px;
+    margin: 1% 2% 1% 0;
+    display: inline-block;
+    border: 3px solid #13395a;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+.box i {
+    position: relative;
+    top: 7px;
+    color: #13395a;
+    font-size: 25px;
+}
+
+.box p {
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.box i:hover {
+    top: 3px;
+}
+
+.box:active {
+    position: relative;
+    top: 1px;
+    left: 1px;
+}
+
+#content {
+
 }
