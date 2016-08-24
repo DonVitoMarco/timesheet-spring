@@ -15,12 +15,14 @@ public class EntriesCommandService implements IEntriesCommandService {
 
     private static final String INSERT_ENTRY = "INSERT INTO entries (date, time, start, end, user_id) " +
             "VALUES (?, ?, ?, ?, (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?))";
-    private static final String EDIT_ENTRY = "UPDATE entries SET entries.START = ?, entries.END = ?, " +
+    private static final String EDIT_ENTRY = "  UPDATE entries SET entries.START = ?, entries.END = ?, " +
             "entries.TIME = ? WHERE entries.DATE = ? AND entries.USER_ID = (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?)";
     private static final String CHECK_ENTRY = "SELECT COUNT(*) FROM entries WHERE entries.DATE = ? AND " +
             "entries.USER_ID = (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?)";
     private static final String DELETE_ENTRY = "DELETE FROM entries WHERE entries.USER_ID = " +
             "(SELECT users.USER_ID FROM users WHERE users.USERNAME = ?) AND entries.DATE = ? AND entries.ENTRIES_ID = ?";
+    private static final String APPROVE_ENTRY = "UPDATE entries SET entries.APPROVE = 1 WHERE entries.ENTRIES_ID = ?";
+    private static final String NOT_APPROVE_ENTRY = "UPDATE entries SET entries.APPROVE = 0 WHERE entries.ENTRIES_ID = ?";
 
 
     private JdbcTemplate jdbcTemplate;
@@ -61,6 +63,14 @@ public class EntriesCommandService implements IEntriesCommandService {
     public int deleteEntry(EntryDeleteFormDTO entryDeleteFormDTO, String username) {
         System.out.println("DELETE: " + entryDeleteFormDTO);
         return jdbcTemplate.update(DELETE_ENTRY, username, entryDeleteFormDTO.getDate(), entryDeleteFormDTO.getIndex());
+    }
+
+    public boolean approveEntry(String index) {
+        return (jdbcTemplate.update(APPROVE_ENTRY, index) > 0);
+    }
+
+    public boolean notapproveEntry(String index) {
+        return (jdbcTemplate.update(NOT_APPROVE_ENTRY, index) > 0);
     }
 
     private EntryCommandDTO convertEntryFormDTOToCommandDTO(EntryFormDTO entryFormDTO, String username) {

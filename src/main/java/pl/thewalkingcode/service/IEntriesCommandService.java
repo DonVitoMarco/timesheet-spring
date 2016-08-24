@@ -13,4 +13,8 @@ public interface IEntriesCommandService {
 
     int deleteEntry(EntryDeleteFormDTO entryDeleteFormDTO, String username);
 
+    boolean approveEntry(String index);
+
+    boolean notapproveEntry(String index);
+
 }

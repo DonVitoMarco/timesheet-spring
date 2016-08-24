@@ -31,6 +31,7 @@
         <div id="logo">
             <i class="fa fa-home fa-5x" aria-hidden="true"></i>
             <div id="clock"></div>
+            <div id="clock2" style="display: none"></div>
         </div>
 
         <div id="main-menu">
@@ -43,6 +44,8 @@
             <a sec:authorize="isAnonymous()" th:href="@{/register}">REGISTER</a>
             <a sec:authorize="isAuthenticated()" th:href="@{/logout}">LOGOUT</a>
         </div>
+
+
     </div>
 
     <div id="wrapper">

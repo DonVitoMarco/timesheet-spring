@@ -66,6 +66,15 @@
         <hr>
 
         <div id="content">
+            <form id="search-box">
+                <table class="formtable">
+                    <tr>
+                        <td><input type="search" id="search-text"></td>
+                        <td><button type="button" class="bth" style="margin-top: 0;" onclick="search()"><i class="fa fa-search" aria-hidden="true"></i> SEARCH</button></td>
+                    </tr>
+                </table>
+            </form>
+
             <table style="display: none;" id="usersTable" class="content-table">
                 <thead>
                     <tr>
@@ -85,7 +94,7 @@
                     <th>TIME</th>
                     <th>APPROVE</th>
                     <th>USERNAME</th>
-                    <th></th>
+                    <th><button type="button" onclick="approveAll()">ALL <i class="fa fa-check" aria-hidden="true"></i></button></th>
                 </tr>
                 </thead>
             </table>
@@ -108,9 +117,8 @@
                 </tr>
                 <tr>
                     <td colspan="3" style="text-align: center">
-                        <input class="bth" type="submit" id="entries-form-submit" value="SEARCH"/>
-
-                        <button type="button" class="bth" onclick="hideEntriesForm()" value="CANCEL">CANCEL</button>
+                        <input type="submit" class="bth" id="entries-form-submit" value="SEARCH">
+                        <input type="button" class="bth" onclick="hideEntriesForm()" value="CANCEL">
                     </td>
                 </tr>
                 </tbody>

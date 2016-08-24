@@ -90,6 +90,7 @@ input[type=time] {
 #navico {
     position: relative;
     top: 5px;
+    cursor: pointer;
 }
 
 #logo {
@@ -120,6 +121,7 @@ input[type=time] {
     margin-top: 10px;
     font-size: 18px;
 }
+
 
 /*-------------------- LOGIN --------------------*/
 #content-login {
@@ -225,8 +227,6 @@ table#usersTable th, table#usersTable td {
     background-color: #f7f7f7;
 }
 
-
-
 /*-------------------- MANAGE --------------------*/
 #main-panel {
     width: 100%;
@@ -263,8 +263,4 @@ table#usersTable th, table#usersTable td {
     position: relative;
     top: 1px;
     left: 1px;
-}
-
-#content {
-
 }

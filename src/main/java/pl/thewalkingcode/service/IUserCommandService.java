@@ -7,4 +7,8 @@ public interface IUserCommandService {
 
     int registerUser(UserRegisterDTO userRegisterDTO);
 
+    boolean changeRoleUser(String userId);
+
+    boolean changeEnableUser(String userId);
+
 }
