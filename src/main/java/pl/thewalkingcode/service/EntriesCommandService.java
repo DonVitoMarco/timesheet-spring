@@ -16,7 +16,7 @@ public class EntriesCommandService implements IEntriesCommandService {
     private static final String INSERT_ENTRY = "INSERT INTO entries (date, time, start, end, user_id) " +
             "VALUES (?, ?, ?, ?, (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?))";
     private static final String EDIT_ENTRY = "  UPDATE entries SET entries.START = ?, entries.END = ?, " +
-            "entries.TIME = ? WHERE entries.DATE = ? AND entries.USER_ID = (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?)";
+            "entries.TIME = ?, entries.APPROVE = 0 WHERE entries.DATE = ? AND entries.USER_ID = (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?)";
     private static final String CHECK_ENTRY = "SELECT COUNT(*) FROM entries WHERE entries.DATE = ? AND " +
             "entries.USER_ID = (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?)";
     private static final String DELETE_ENTRY = "DELETE FROM entries WHERE entries.USER_ID = " +

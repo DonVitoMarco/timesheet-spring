@@ -1,3 +1,11 @@
+$(document).ready(function () {
+
+    $('#clock').on("click", function() {
+        window.location.replace("http://localhost:8080/about")
+    });
+
+});
+
 function startTime() {
     var today = new Date();
     var h = today.getHours();

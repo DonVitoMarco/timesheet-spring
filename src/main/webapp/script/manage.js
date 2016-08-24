@@ -108,6 +108,8 @@ function showEntriesAjax() {
         timeout: 100000,
 
         success: function (d) {
+            console.log("CLEAR TABLE");
+            $("#entriesTable > tr").remove();
             console.log("SUCCESS: ", d);
             drawTable(d);
         },
@@ -273,7 +275,7 @@ function approve(i) {
 
         success: function (d) {
             console.log("SUCCESS: ", d);
-            entries();
+            $("#entries-form-submit").click();
         },
         error: function (e) {
             console.log("ERROR: ", e);
@@ -283,12 +285,11 @@ function approve(i) {
 }
 
 function approveAll() {
-
     var elements = $('.filter:visible');
     console.log(elements.length);
     for(var i = 0; i < elements.length; i++) {
         console.log(elements[i].getAttribute('id').replace('entry',''));
         approve(elements[i].getAttribute('id').replace('entry',''));
     }
-
+    console.log("END APPROVE ALL");
 }

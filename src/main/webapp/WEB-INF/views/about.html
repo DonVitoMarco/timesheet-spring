@@ -1,0 +1,35 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+
+    <!-- META -->
+    <title>ABOUT</title>
+    <meta charset="UTF-8">
+
+    <!-- FONT -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="../../font/font-awesome-4.6.3/css/font-awesome.min.css">
+
+    <!-- CSS -->
+    <link type="text/css" rel="stylesheet" href="../../css/normalize.css" th:href="@{css/normalize.css}">
+    <link type="text/css" rel="stylesheet" href="../../font/font-awesome-4.6.3/css/font-awesome.css" th:href="@{font/font-awesome-4.6.3/css/font-awesome.min.css}">
+    <link type="text/css" rel="stylesheet" href="../../css/style.css" th:href="@{css/style.css}">
+
+    <!-- SCRIPT -->
+    <script src="../../script/jquery-3.1.0.min.js" th:src="@{script/jquery-3.1.0.min.js}"></script>
+    <script src="../../script/time.js"></script>
+
+</head>
+<body onload="startTime()">
+
+    <div id="about">
+        <div id="clock"></div>
+        <div id="clock2"></div>
+        <h2>Have a nice day ! <i class="fa fa-smile-o" aria-hidden="true"></i></h2>
+        <h1><i class="fa fa-copyright" aria-hidden="true"></i> Created by Marek Chrapek</h1>
+    </div>
+
+</body>
+</html>

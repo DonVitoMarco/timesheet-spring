@@ -264,3 +264,19 @@ table#usersTable th, table#usersTable td {
     top: 1px;
     left: 1px;
 }
+
+/*-------------------- ABOUT --------------------*/
+#about {
+    position: relative;
+    text-align: center;
+    top: 20%;
+    font-size: 40px;
+}
+
+#about #clock {
+    font-size: 90px;
+}
+
+#about h1 {
+
+}
