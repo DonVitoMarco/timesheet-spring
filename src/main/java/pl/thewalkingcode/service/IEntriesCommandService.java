@@ -15,6 +15,6 @@ public interface IEntriesCommandService {
 
     boolean approveEntry(String index);
 
-    boolean notapproveEntry(String index);
+    boolean notApproveEntry(String index);
 
 }

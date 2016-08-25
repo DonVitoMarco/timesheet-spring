@@ -73,9 +73,9 @@ public class AjaxCommandRestController {
     }
 
     @RequestMapping(value = "/notapprove")
-    public ResponseEntity notapproveEntry(@RequestBody String index) {
+    public ResponseEntity notApproveEntry(@RequestBody String index) {
         System.out.println(index.split("=")[1]);
-        boolean suc = commandService.notapproveEntry(index.split("=")[1]);
+        boolean suc = commandService.notApproveEntry(index.split("=")[1]);
         return ResponseEntity.status(HttpStatus.OK).body(suc);
     }
 

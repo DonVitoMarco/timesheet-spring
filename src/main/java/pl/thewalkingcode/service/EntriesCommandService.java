@@ -69,7 +69,7 @@ public class EntriesCommandService implements IEntriesCommandService {
         return (jdbcTemplate.update(APPROVE_ENTRY, index) > 0);
     }
 
-    public boolean notapproveEntry(String index) {
+    public boolean notApproveEntry(String index) {
         return (jdbcTemplate.update(NOT_APPROVE_ENTRY, index) > 0);
     }
 
