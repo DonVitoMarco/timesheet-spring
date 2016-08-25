@@ -6,7 +6,7 @@ $(document).ready(function () {
         $("#errorbox").show().html("Passwords do not match");
     }
     if(res[1] == "validUsername") {
-        $("#errorbox").show().html("Username is already exist");
+        $("#errorbox").show().html("Username already exists");
     }
 
 });
