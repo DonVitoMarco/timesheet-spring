@@ -98,7 +98,20 @@
                 </tr>
                 </thead>
             </table>
-            <div id="departmentsList"></div>
+            <div style="display: none;" id="departmentsTable">
+                <form id="add-department-box">
+                    <table class="formtable">
+                        <tr>
+                            <td><input type="text" id="add-department"></td>
+                            <td><button type="button" class="bth" style="margin-top: 0;" onclick="changeDepartment(this)" value="add">
+                                <i class="fa fa-plus" aria-hidden="true"></i></button></td>
+                        </tr>
+                    </table>
+                </form>
+                <ul id="departmentsList">
+                </ul>
+            </div>
+
         </div>
 
         <form id="entries-form">

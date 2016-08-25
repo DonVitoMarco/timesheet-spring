@@ -265,6 +265,30 @@ table#usersTable th, table#usersTable td {
     left: 1px;
 }
 
+ul {
+    list-style: none;
+    text-align: center;
+    width: 60%;
+    margin: 0 auto;
+}
+
+li {
+    font-size: 20px;
+    font-weight: 300;
+    padding: 10px;
+    margin: 3px;
+    background-color: #f7f7f7;
+    text-align: center;
+}
+
+li:nth-child(odd) {
+    background-color: #eeeeee;
+}
+
+li button {
+    font-weight: 300;
+    font-size: 16px;
+}
 /*-------------------- ABOUT --------------------*/
 #about {
     position: relative;
@@ -275,8 +299,4 @@ table#usersTable th, table#usersTable td {
 
 #about #clock {
     font-size: 90px;
-}
-
-#about h1 {
-
 }

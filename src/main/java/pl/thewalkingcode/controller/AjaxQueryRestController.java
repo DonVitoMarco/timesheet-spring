@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.thewalkingcode.model.*;
+import pl.thewalkingcode.service.IDepartmentsQueryService;
 import pl.thewalkingcode.service.IEntriesCommandService;
 import pl.thewalkingcode.service.IEntriesQueryService;
 import pl.thewalkingcode.service.IUserQueryService;
@@ -20,11 +21,13 @@ public class AjaxQueryRestController {
 
     private IEntriesQueryService entriesQueryService;
     private IUserQueryService userQueryService;
+    private IDepartmentsQueryService departmentsQueryService;
 
     @Autowired
-    public AjaxQueryRestController(IEntriesQueryService entriesQueryService, IUserQueryService userQueryService) {
+    public AjaxQueryRestController(IEntriesQueryService entriesQueryService, IUserQueryService userQueryService, IDepartmentsQueryService departmentsQueryService) {
         this.entriesQueryService = entriesQueryService;
         this.userQueryService = userQueryService;
+        this.departmentsQueryService = departmentsQueryService;
     }
 
     @RequestMapping(value = "/show")
@@ -46,5 +49,11 @@ public class AjaxQueryRestController {
         return entriesQueryService.getAllEntriesAllUsers(Date.valueOf(showCriteriaFormDTO.getDataStart()),
                 Date.valueOf(showCriteriaFormDTO.getDataEnd()));
     }
+
+    @RequestMapping(value = "/departments")
+    public List<String> showAllDepartments() {
+        return departmentsQueryService.getAllDepartments();
+    }
+
 
 }

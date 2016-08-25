@@ -11,26 +11,25 @@ $(document).ready(function () {
 
 });
 
+
+//----------------------- CLICK BUTTONS -----------------------
 function users() {
-    console.log("USERS");
+    console.log("CLICK USERS");
+    hideManageTable();
     $("#usersTable > tr").remove();
     $("#usersTable").show();
-    $("#entriesTable").hide();
-    $("#departmentsList").hide();
+    $("#search-box").show();
     hideEntriesForm();
     showUsersAjax();
 }
 
 function entries() {
-    console.log("ENTRIES");
+    hideManageTable();
     $("#entriesTable > tr").remove();
-    $("#usersTable").hide();
-
-    $("#departmentsList").hide();
-
+    $("#search-box").show();
+    $("#entriesTable").show();
     $("#entries-form-date-start").val(getCurrentDay());
     $("#entries-form-date-end").val(getCurrentDay());
-    $("#entriesTable").show();
 
     var p = $("#entries-button").position();
     $('#entries-form').css({position: 'absolute', top: p.top + 50, left: p.left + 20}).show();
@@ -38,35 +37,54 @@ function entries() {
 
 function departments() {
     console.log("DEPARTMENTS");
-    $("#usersTable").hide();
-    $("#entriesTable").hide();
-    $("#departmentsList").show();
-
+    hideManageTable();
+    $("#departmentsList > li").remove();
+    $("#departmentsTable").show();
+    showDepartmentsAjax();
 }
 
-function hideEntriesForm() {
-    console.log("HIDE");
-    $('#entries-form').hide();
-}
-
-function showUsersAjax() {
-    var data = {};
-    data["data"] = "users";
+function changeRole(i) {
+    console.log("CLICK CHANGE ROLE: ", i);
 
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/ajax/query/users",
-        data: JSON.stringify(data),
+        url: "/ajax/command/changeRole",
+        data: {'index': i},
         dataType: 'json',
         timeout: 100000,
 
         success: function (d) {
             console.log("SUCCESS: ", d);
-            drawTable(d);
+            document.getElementById('users-button').click();
         },
         error: function (e) {
             console.log("ERROR: ", e);
+        }
+    });
+}
+
+function hideEntriesForm() {
+    console.log("HIDE ENTRIES FORM");
+    $('#entries-form').hide();
+}
+
+//----------------------- AJAX -----------------------
+function showUsersAjax() {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/ajax/query/users",
+        data: {"data":"users"},
+        dataType: 'json',
+        timeout: 100000,
+
+        success: function (d) {
+            console.log("SUCCESS SHOW USERS AJAX: ", d);
+            drawTable(d);
+        },
+        error: function (e) {
+            console.log("ERROR SHOW USERS AJAX: ", e);
         }
     });
 
@@ -76,7 +94,6 @@ function showUsersAjax() {
             b = b.username;
             return a<b ? -1 : a>b ? 1 : 0;
         });
-
         for(var i = 0; i < d.length; i++) {
             drawRow(d[i]);
         }
@@ -86,15 +103,43 @@ function showUsersAjax() {
     function drawRow(rowData) {
         var row = $("<tr />").attr("id", "user" + rowData.index).addClass("filter");
         $("#usersTable").append(row);
-        row.append($("<td>" + rowData.username + "</td>"));
+        row.append($("<td class='username'>" + rowData.username + "</td>"));
         row.append($("<td class='enable'>" + rowData.enable + "</td>"));
-        row.append($("<td>" + rowData.roles + " <i style='cursor: pointer;' onclick='changeRole(" + rowData.index + ")' class='fa fa-refresh' aria-hidden='true'></i>" + "</td>"));
-        row.append($("<td>" + rowData.department + "</td>"));
+        row.append($("<td class='roles'>" + rowData.roles + " <i style='cursor: pointer;' " +
+            "onclick='changeRole(" + rowData.index + ")' class='fa fa-refresh' aria-hidden='true'></i>" + "</td>"));
+        row.append($("<td class='department'>" + rowData.department + "</td>"));
+    }
+}
+
+function showDepartmentsAjax() {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/ajax/query/departments",
+        data: {'data': 'departments'},
+        dataType: 'json',
+        timeout: 100000,
+
+        success: function (d) {
+            console.log("SUCCESS: ", d);
+            drawList(d);
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+
+    function drawList(d) {
+        d.sort();
+        for(var i = 0; i < d.length; i++) {
+            $("#departmentsList").append("<li>" + d[i] + " " +
+                "<button type='button' style='margin-top: 0; margin-left: 10px;' onclick='changeDepartment(this)' value='delete' id='" + d[i] + "-" + i + "'>" +
+                "<i class='fa fa-trash-o' aria-hidden='true'></i></button>" + "</li>");
+        }
     }
 }
 
 function showEntriesAjax() {
-
     var data = {};
     data["dataStart"] = $("#entries-form-date-start").val();
     data["dataEnd"] = $("#entries-form-date-end").val();
@@ -108,7 +153,6 @@ function showEntriesAjax() {
         timeout: 100000,
 
         success: function (d) {
-            console.log("CLEAR TABLE");
             $("#entriesTable > tr").remove();
             console.log("SUCCESS: ", d);
             drawTable(d);
@@ -128,7 +172,6 @@ function showEntriesAjax() {
         for(var i = 0; i < d.length; i++) {
             drawRow(d[i]);
         }
-        //checkEnable();
     }
 
     function drawRow(rowData) {
@@ -145,21 +188,8 @@ function showEntriesAjax() {
     }
 }
 
-function checkEnable() {
-    var elem = document.getElementsByClassName('enable');
-
-    for(var i = 0; i < elem.length; i++) {
-        var index = elem[i].closest("tr").getAttribute('id').replace('user','');
-        if(elem[i].innerHTML == 'false') {
-            elem[i].innerHTML = "no " + "<i style='cursor: pointer;' onclick='changeEnable(" + index + ")' class='fa fa-check check' aria-hidden='true'></i>";
-        } else {
-            elem[i].innerHTML = "yes " + "<i style='cursor: pointer;' onclick='changeEnable(" + index + ")' class='fa fa-times error' aria-hidden='true'></i></button>";
-        }
-    }
-}
-
 function changeEnable(i) {
-    console.log("CHANGE ENABLE", i);
+    console.log("CHANGE ENABLE:", i);
 
     $.ajax({
         type: "POST",
@@ -179,26 +209,28 @@ function changeEnable(i) {
     });
 }
 
-function changeRole(i) {
-    console.log("CHANGE ROLE", i);
-
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/ajax/command/changeRole",
-        data: {'index': i},
-        dataType: 'json',
-        timeout: 100000,
-
-        success: function (d) {
-            console.log("SUCCESS: ", d);
-            document.getElementById('users-button').click();
-        },
-        error: function (e) {
-            console.log("ERROR: ", e);
-        }
-    });
+//----------------------- FUNC -----------------------
+function hideManageTable() {
+    $("#search-box").hide();
+    $("#usersTable").hide();
+    $("#entriesTable").hide();
+    $("#departmentsTable").hide();
 }
+
+function checkEnable() {
+    var elem = document.getElementsByClassName('enable');
+    for(var i = 0; i < elem.length; i++) {
+        var index = elem[i].closest("tr").getAttribute('id').replace('user','');
+        if(elem[i].innerHTML == 'false') {
+            elem[i].innerHTML = "no " + "<i style='cursor: pointer;' onclick='changeEnable(" + index + ")' class='fa fa-check check' aria-hidden='true'></i>";
+        } else {
+            elem[i].innerHTML = "yes " + "<i style='cursor: pointer;' onclick='changeEnable(" + index + ")' class='fa fa-times error' aria-hidden='true'></i></button>";
+        }
+    }
+}
+
+
+
 
 function getCurrentDay() {
     var date = new Date();
@@ -292,4 +324,38 @@ function approveAll() {
         approve(elements[i].getAttribute('id').replace('entry',''));
     }
     console.log("END APPROVE ALL");
+}
+
+function changeDepartment(objButton) {
+    console.log("ADD DEPARTMENT");
+
+    var data = {};
+    if(objButton.value == 'add') {
+        data["name"] = $("#add-department").val();
+        data["action"] = objButton.value;
+    }
+    if(objButton.value == 'delete') {
+        data["name"] = objButton.getAttribute("id").split("-")[0];
+        data["action"] = objButton.value;
+    }
+    console.log("DEPARTMENT", data);
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/ajax/command/changeDepartment",
+        data: JSON.stringify(data),
+        dataType: 'json',
+        timeout: 100000,
+
+        success: function (d) {
+            console.log("SUCCESS: ", d);
+            document.getElementById("departments-button").click();
+            $("#add-department").val("");
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+
 }

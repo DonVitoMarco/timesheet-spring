@@ -7,9 +7,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.thewalkingcode.model.DepartmentFormDTO;
 import pl.thewalkingcode.model.EntryCommandDTO;
 import pl.thewalkingcode.model.EntryDeleteFormDTO;
 import pl.thewalkingcode.model.EntryFormDTO;
+import pl.thewalkingcode.service.IDepartmentsCommandService;
 import pl.thewalkingcode.service.IEntriesCommandService;
 import pl.thewalkingcode.service.IUserCommandService;
 
@@ -20,12 +22,15 @@ public class AjaxCommandRestController {
 
     private IEntriesCommandService commandService;
     private IUserCommandService userCommandService;
+    private IDepartmentsCommandService departmentsCommandService;
 
     @Autowired
-    public AjaxCommandRestController(IEntriesCommandService commandService, IUserCommandService userCommandService) {
+    public AjaxCommandRestController(IEntriesCommandService commandService, IUserCommandService userCommandService, IDepartmentsCommandService departmentsCommandService) {
         this.commandService = commandService;
         this.userCommandService = userCommandService;
+        this.departmentsCommandService = departmentsCommandService;
     }
+
 
     @RequestMapping(value = "/add")
     public ResponseEntity addEntry(@RequestBody EntryFormDTO entryFormDTO) {
@@ -77,6 +82,18 @@ public class AjaxCommandRestController {
         System.out.println(index.split("=")[1]);
         boolean suc = commandService.notApproveEntry(index.split("=")[1]);
         return ResponseEntity.status(HttpStatus.OK).body(suc);
+    }
+
+    @RequestMapping(value = "/changeDepartment")
+    public boolean changeDepartmentStatus(@RequestBody DepartmentFormDTO departmentFormDTO) {
+        System.out.println(departmentFormDTO.toString());
+        if(departmentFormDTO.getAction().equals("add")) {
+            return departmentsCommandService.addDepartments(departmentFormDTO.getName());
+        }
+        if(departmentFormDTO.getAction().equals("delete")) {
+            return departmentsCommandService.deleteDepartments(departmentFormDTO.getName());
+        }
+        return false;
     }
 
 }
