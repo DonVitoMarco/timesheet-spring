@@ -39,9 +39,10 @@ public class AjaxCommandRestController {
     @RequestMapping(value = "/add")
     public ResponseEntity addEntry(@RequestBody EntryFormDTO entryFormDTO) {
         logger.debug("Add Entry: " + entryFormDTO);
-        EntryCommandDTO entry = entriesCommandService.addNewEntry(entryFormDTO,
+        boolean result = entriesCommandService.addNewEntry(entryFormDTO,
                 SecurityContextHolder.getContext().getAuthentication().getName());
-        return ResponseEntity.status(HttpStatus.OK).body(entry);
+        logger.debug(result);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @RequestMapping(value = "/edit")

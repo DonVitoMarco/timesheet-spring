@@ -105,6 +105,11 @@ function addAjax() {
 
         success: function (d) {
             console.log("SUCCESS: ", d);
+            if(d == true) {
+                $("#confirm").show().html("SUC");
+            } else {
+                $("#confirm").show().addClass("false-confirm")
+            }
             document.getElementById("btn-search").click();
         },
         error: function (e) {

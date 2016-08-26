@@ -19,7 +19,7 @@ public class EntriesCommandService implements IEntriesCommandService {
 
     private static final String INSERT_ENTRY = "INSERT INTO entries (date, time, start, end, user_id) " +
             "VALUES (?, ?, ?, ?, (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?))";
-    private static final String EDIT_ENTRY = "  UPDATE entries SET entries.START = ?, entries.END = ?, " +
+    private static final String EDIT_ENTRY = "UPDATE entries SET entries.START = ?, entries.END = ?, " +
             "entries.TIME = ?, entries.APPROVE = 0 WHERE entries.DATE = ? AND entries.USER_ID = (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?)";
     private static final String CHECK_ENTRY = "SELECT COUNT(*) FROM entries WHERE entries.DATE = ? AND " +
             "entries.USER_ID = (SELECT users.USER_ID FROM users WHERE users.USERNAME = ?)";
@@ -37,15 +37,15 @@ public class EntriesCommandService implements IEntriesCommandService {
 
 
     @Override
-    public EntryCommandDTO addNewEntry(EntryFormDTO entryFormDTO, String username) {
+    public boolean addNewEntry(EntryFormDTO entryFormDTO, String username) {
         EntryCommandDTO entry = convertEntryFormDTOToCommandDTO(entryFormDTO, username);
         logger.debug("Add New Entry Before Convert: " + entryFormDTO.toString() + " " + username);
         logger.debug("Add New Entry: " + entry.toString());
         if (!checkExistEntry(entry.getDate(), entry.getUsername())) {
-            jdbcTemplate.update(INSERT_ENTRY, entry.getDate(), entry.getTime(),
-                    entry.getStartTime(), entry.getEndTime(), entry.getUsername());
+            return (jdbcTemplate.update(INSERT_ENTRY, entry.getDate(), entry.getTime(),
+                    entry.getStartTime(), entry.getEndTime(), entry.getUsername()) > 0);
         }
-        return entry;
+        return false;
     }
 
     public EntryCommandDTO editEntry(EntryFormDTO entryFormDTO, String username) {

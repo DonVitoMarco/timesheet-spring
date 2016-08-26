@@ -300,3 +300,21 @@ li button {
 #about #clock {
     font-size: 90px;
 }
+
+#confirm {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    background-color: limegreen;
+    color: white;
+    width: 25%;
+    height: 5%;
+    top: 28%;
+    left: 38%;
+    padding: 5px;
+}
+
+#false-confirm {
+    background-color: #dd0000;
+}
+

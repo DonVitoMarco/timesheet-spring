@@ -7,7 +7,7 @@ import pl.thewalkingcode.model.EntryFormDTO;
 
 public interface IEntriesCommandService {
 
-    EntryCommandDTO addNewEntry(EntryFormDTO entryFormDTO, String username);
+    boolean addNewEntry(EntryFormDTO entryFormDTO, String username);
 
     EntryCommandDTO editEntry(EntryFormDTO entryFormDTO, String username);
 
