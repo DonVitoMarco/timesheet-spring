@@ -1,5 +1,6 @@
 package pl.thewalkingcode.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,6 +10,8 @@ import pl.thewalkingcode.model.UserRegisterDTO;
 
 @Component
 public class UserCommandService implements IUserCommandService {
+
+    private final static Logger logger = Logger.getLogger(UserCommandService.class);
 
     private static final String REGISTER_USER = "INSERT INTO users (users.USERNAME, users.PASSWORD) VALUES (?, ?)";
     private static final String CHANGE_ROLE = "UPDATE users SET users.ROLES_ID = (users.ROLES_ID ^ 1) WHERE users.USER_ID = ?";
@@ -21,16 +24,20 @@ public class UserCommandService implements IUserCommandService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
     public int registerUser(UserRegisterDTO userRegisterDTO) {
+        logger.debug("Register User");
         return jdbcTemplate.update(REGISTER_USER, userRegisterDTO.getUsername(), new BCryptPasswordEncoder().encode(userRegisterDTO.getPassword()));
     }
 
-    public boolean changeRoleUser(String userId) {
-        return (jdbcTemplate.update(CHANGE_ROLE, userId) > 0);
+    public int changeRoleUser(String userId) {
+        logger.debug("Change Role User");
+        return jdbcTemplate.update(CHANGE_ROLE, userId);
     }
 
-    public boolean changeEnableUser(String userId) {
-        return (jdbcTemplate.update(CHANGE_ENABLE, userId) > 0);
+    public int changeEnableUser(String userId) {
+        logger.debug("Check Enable User");
+        return jdbcTemplate.update(CHANGE_ENABLE, userId);
     }
 
 }

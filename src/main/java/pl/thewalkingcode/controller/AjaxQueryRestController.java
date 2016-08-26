@@ -30,6 +30,7 @@ public class AjaxQueryRestController {
         this.departmentsQueryService = departmentsQueryService;
     }
 
+
     @RequestMapping(value = "/show")
     public List<EntryQueryDTO> showEntries(@RequestBody ShowCriteriaFormDTO showCriteriaDTO) {
         //TODO logger

@@ -20,13 +20,15 @@ import pl.thewalkingcode.service.IUserCommandService;
 @RequestMapping(value = "/ajax/command")
 public class AjaxCommandRestController {
 
-    private IEntriesCommandService commandService;
+
+    private IEntriesCommandService entriesCommandService;
     private IUserCommandService userCommandService;
     private IDepartmentsCommandService departmentsCommandService;
 
     @Autowired
-    public AjaxCommandRestController(IEntriesCommandService commandService, IUserCommandService userCommandService, IDepartmentsCommandService departmentsCommandService) {
-        this.commandService = commandService;
+    public AjaxCommandRestController(IEntriesCommandService entriesCommandService, IUserCommandService userCommandService,
+                                     IDepartmentsCommandService departmentsCommandService) {
+        this.entriesCommandService = entriesCommandService;
         this.userCommandService = userCommandService;
         this.departmentsCommandService = departmentsCommandService;
     }
@@ -35,7 +37,7 @@ public class AjaxCommandRestController {
     @RequestMapping(value = "/add")
     public ResponseEntity addEntry(@RequestBody EntryFormDTO entryFormDTO) {
         System.out.println("ENTRY FORM DTO: " + entryFormDTO.toString());
-        EntryCommandDTO entry = commandService.addNewEntry(entryFormDTO,
+        EntryCommandDTO entry = entriesCommandService.addNewEntry(entryFormDTO,
                 SecurityContextHolder.getContext().getAuthentication().getName());
         return ResponseEntity.status(HttpStatus.OK).body(entry);
     }
@@ -43,7 +45,7 @@ public class AjaxCommandRestController {
     @RequestMapping(value = "/edit")
     public ResponseEntity editEntry(@RequestBody EntryFormDTO entryFormDTO) {
         System.out.println("ENTRY FORM DTO: " + entryFormDTO.toString());
-        EntryCommandDTO entry = commandService.editEntry(entryFormDTO,
+        EntryCommandDTO entry = entriesCommandService.editEntry(entryFormDTO,
                 SecurityContextHolder.getContext().getAuthentication().getName());
         return ResponseEntity.status(HttpStatus.OK).body(entry);
     }
@@ -51,7 +53,7 @@ public class AjaxCommandRestController {
     @RequestMapping(value = "/del")
     public ResponseEntity delEntry(@RequestBody EntryDeleteFormDTO entryDeleteFormDTO) {
         System.out.println(entryDeleteFormDTO.toString());
-        int countEntry = commandService.deleteEntry(entryDeleteFormDTO,
+        int countEntry = entriesCommandService.deleteEntry(entryDeleteFormDTO,
                 SecurityContextHolder.getContext().getAuthentication().getName());
         return ResponseEntity.status(HttpStatus.OK).body(countEntry);
     }
@@ -59,28 +61,28 @@ public class AjaxCommandRestController {
     @RequestMapping(value = "/changeRole")
     public ResponseEntity changeRole(@RequestBody String index) {
         System.out.println(index.split("=")[1]);
-        boolean suc = userCommandService.changeRoleUser(index.split("=")[1]);
-        return ResponseEntity.status(HttpStatus.OK).body(suc);
+        int affectedRows = userCommandService.changeRoleUser(index.split("=")[1]);
+        return ResponseEntity.status(HttpStatus.OK).body(affectedRows);
     }
 
     @RequestMapping(value = "/changeEnable")
     public ResponseEntity changeEnable(@RequestBody String index) {
         System.out.println(index.split("=")[1]);
-        boolean suc = userCommandService.changeEnableUser(index.split("=")[1]);
-        return ResponseEntity.status(HttpStatus.OK).body(suc);
+        int affectedRows = userCommandService.changeEnableUser(index.split("=")[1]);
+        return ResponseEntity.status(HttpStatus.OK).body(affectedRows);
     }
 
     @RequestMapping(value = "/approve")
     public ResponseEntity approveEntry(@RequestBody String index) {
         System.out.println(index.split("=")[1]);
-        boolean suc = commandService.approveEntry(index.split("=")[1]);
+        boolean suc = entriesCommandService.approveEntry(index.split("=")[1]);
         return ResponseEntity.status(HttpStatus.OK).body(suc);
     }
 
     @RequestMapping(value = "/notapprove")
     public ResponseEntity notApproveEntry(@RequestBody String index) {
         System.out.println(index.split("=")[1]);
-        boolean suc = commandService.notApproveEntry(index.split("=")[1]);
+        boolean suc = entriesCommandService.notApproveEntry(index.split("=")[1]);
         return ResponseEntity.status(HttpStatus.OK).body(suc);
     }
 

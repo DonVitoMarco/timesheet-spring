@@ -11,7 +11,6 @@ $(document).ready(function () {
 
 });
 
-
 //----------------------- CLICK BUTTONS -----------------------
 function users() {
     console.log("CLICK USERS");
@@ -189,8 +188,6 @@ function showEntriesAjax() {
 }
 
 function changeEnable(i) {
-    console.log("CHANGE ENABLE:", i);
-
     $.ajax({
         type: "POST",
         contentType: "application/json",
@@ -209,71 +206,6 @@ function changeEnable(i) {
     });
 }
 
-//----------------------- FUNC -----------------------
-function hideManageTable() {
-    $("#search-box").hide();
-    $("#usersTable").hide();
-    $("#entriesTable").hide();
-    $("#departmentsTable").hide();
-}
-
-function checkEnable() {
-    var elem = document.getElementsByClassName('enable');
-    for(var i = 0; i < elem.length; i++) {
-        var index = elem[i].closest("tr").getAttribute('id').replace('user','');
-        if(elem[i].innerHTML == 'false') {
-            elem[i].innerHTML = "no " + "<i style='cursor: pointer;' onclick='changeEnable(" + index + ")' class='fa fa-check check' aria-hidden='true'></i>";
-        } else {
-            elem[i].innerHTML = "yes " + "<i style='cursor: pointer;' onclick='changeEnable(" + index + ")' class='fa fa-times error' aria-hidden='true'></i></button>";
-        }
-    }
-}
-
-
-
-
-function getCurrentDay() {
-    var date = new Date();
-    var month = date.getMonth() + 1;
-    var day = date.getDate();
-    var output = date.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
-    return output;
-}
-
-function search() {
-    reset();
-    console.log($("#search-text").val());
-    var text = $("#search-text").val();
-    var elements = document.getElementsByClassName("filter");
-    console.log(elements);
-    for(var i = 0; i < elements.length; i++) {
-        var hasContent = false;
-        console.log(elements[i].children);
-        console.log(elements[i].children.length);
-        for(var j = 0; j < elements[i].children.length; j++) {
-            console.log(elements[i].children[j].textContent);
-            console.log();
-            if("index", elements[i].children[j].textContent.indexOf(text) > -1) {
-                console.log(elements[i].children[j].textContent, " = ", text);
-                hasContent = true;
-            }
-        }
-        if(!hasContent) {
-            console.log("TRUE", elements[i]);
-            elements[i].style.display = "none";
-        }
-    }
-    var text = $("#search-text").val("");
-}
-
-function reset() {
-    var elements = document.getElementsByClassName("filter");
-    for(var i = 0; i < elements.length; i++) {
-        console.log(elements.length);
-        elements[i].style.display = "";
-    }
-}
-
 function notapprove(i) {
 
     $.ajax({
@@ -287,6 +219,38 @@ function notapprove(i) {
         success: function (d) {
             console.log("SUCCESS: ", d);
             document.getElementById('entries-form-submit').click();
+        },
+        error: function (e) {
+            console.log("ERROR: ", e);
+        }
+    });
+
+}
+
+function changeDepartment(objButton) {
+
+    var data = {};
+    if(objButton.value == 'add') {
+        data["name"] = $("#add-department").val();
+        data["action"] = objButton.value;
+    }
+    if(objButton.value == 'delete') {
+        data["name"] = objButton.getAttribute("id").split("-")[0];
+        data["action"] = objButton.value;
+    }
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/ajax/command/changeDepartment",
+        data: JSON.stringify(data),
+        dataType: 'json',
+        timeout: 100000,
+
+        success: function (d) {
+            console.log("SUCCESS: ", d);
+            document.getElementById("departments-button").click();
+            $("#add-department").val("");
         },
         error: function (e) {
             console.log("ERROR: ", e);
@@ -316,46 +280,61 @@ function approve(i) {
 
 }
 
-function approveAll() {
-    var elements = $('.filter:visible');
-    console.log(elements.length);
-    for(var i = 0; i < elements.length; i++) {
-        console.log(elements[i].getAttribute('id').replace('entry',''));
-        approve(elements[i].getAttribute('id').replace('entry',''));
-    }
-    console.log("END APPROVE ALL");
+//----------------------- FUNC -----------------------
+function hideManageTable() {
+    $("#search-box").hide();
+    $("#usersTable").hide();
+    $("#entriesTable").hide();
+    $("#departmentsTable").hide();
 }
 
-function changeDepartment(objButton) {
-    console.log("ADD DEPARTMENT");
-
-    var data = {};
-    if(objButton.value == 'add') {
-        data["name"] = $("#add-department").val();
-        data["action"] = objButton.value;
-    }
-    if(objButton.value == 'delete') {
-        data["name"] = objButton.getAttribute("id").split("-")[0];
-        data["action"] = objButton.value;
-    }
-    console.log("DEPARTMENT", data);
-
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/ajax/command/changeDepartment",
-        data: JSON.stringify(data),
-        dataType: 'json',
-        timeout: 100000,
-
-        success: function (d) {
-            console.log("SUCCESS: ", d);
-            document.getElementById("departments-button").click();
-            $("#add-department").val("");
-        },
-        error: function (e) {
-            console.log("ERROR: ", e);
+function checkEnable() {
+    var elem = document.getElementsByClassName('enable');
+    for(var i = 0; i < elem.length; i++) {
+        var index = elem[i].closest("tr").getAttribute('id').replace('user','');
+        if(elem[i].innerHTML == 'false') {
+            elem[i].innerHTML = "no " + "<i style='cursor: pointer;' onclick='changeEnable(" + index + ")' class='fa fa-check check' aria-hidden='true'></i>";
+        } else {
+            elem[i].innerHTML = "yes " + "<i style='cursor: pointer;' onclick='changeEnable(" + index + ")' class='fa fa-times error' aria-hidden='true'></i></button>";
         }
-    });
+    }
+}
 
+function getCurrentDay() {
+    var date = new Date();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    return date.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+}
+
+function search() {
+    reset();
+    var text = $("#search-text").val();
+    var elements = document.getElementsByClassName("filter");
+    for(var i = 0; i < elements.length; i++) {
+        var hasContent = false;
+        for(var j = 0; j < elements[i].children.length; j++) {
+            if(elements[i].children[j].textContent.indexOf(text) > -1) {
+                hasContent = true;
+            }
+        }
+        if(!hasContent) {
+            elements[i].style.display = "none";
+        }
+    }
+    $("#search-text").val("");
+}
+
+function reset() {
+    var elements = document.getElementsByClassName("filter");
+    for(var i = 0; i < elements.length; i++) {
+        elements[i].style.display = "";
+    }
+}
+
+function approveAll() {
+    var elements = $('.filter:visible');
+    for(var i = 0; i < elements.length; i++) {
+        approve(elements[i].getAttribute('id').replace('entry',''));
+    }
 }

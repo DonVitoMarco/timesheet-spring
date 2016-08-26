@@ -1,5 +1,6 @@
 package pl.thewalkingcode.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -15,13 +16,18 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class LoginController {
 
+    private final static Logger logger = Logger.getLogger(LoginController.class);
+
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
+        logger.debug("Login Page");
         return "login";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
+        logger.debug("Logout: " + SecurityContextHolder.getContext().getAuthentication().getName());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null)
             new SecurityContextLogoutHandler().logout(httpRequest, httpResponse, authentication);

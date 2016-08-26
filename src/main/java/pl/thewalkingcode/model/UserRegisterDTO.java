@@ -5,6 +5,7 @@ import pl.thewalkingcode.validation.ValidPassword;
 
 import javax.validation.constraints.NotNull;
 
+
 @ValidPassword
 public class UserRegisterDTO {
 

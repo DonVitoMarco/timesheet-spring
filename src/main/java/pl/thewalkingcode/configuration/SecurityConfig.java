@@ -53,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/logout").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/register").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/about").permitAll()
                 .antMatchers("/").permitAll().and()
 
                 .csrf().disable();
