@@ -26,17 +26,17 @@ public class UserCommandService implements IUserCommandService {
 
 
     public int registerUser(UserRegisterDTO userRegisterDTO) {
-        logger.debug("Register User");
+        logger.debug("Register User: " + userRegisterDTO.toString());
         return jdbcTemplate.update(REGISTER_USER, userRegisterDTO.getUsername(), new BCryptPasswordEncoder().encode(userRegisterDTO.getPassword()));
     }
 
     public int changeRoleUser(String userId) {
-        logger.debug("Change Role User");
+        logger.debug("Change Role User: " + userId);
         return jdbcTemplate.update(CHANGE_ROLE, userId);
     }
 
     public int changeEnableUser(String userId) {
-        logger.debug("Check Enable User");
+        logger.debug("Check Enable User: " + userId);
         return jdbcTemplate.update(CHANGE_ENABLE, userId);
     }
 

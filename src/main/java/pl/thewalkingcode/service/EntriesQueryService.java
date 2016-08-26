@@ -34,12 +34,12 @@ public class EntriesQueryService implements IEntriesQueryService {
 
     @Override
     public List<EntryQueryDTO> getAllEntries(String username, Date startDate, Date endDate) {
-        logger.debug("Get All Entries");
+        logger.debug("Get All Entries: " + username + " " + startDate + " " + endDate);
         return jdbcTemplate.query(GET_ENTRIES, new EntryQueryDTOMapper(), username, startDate, endDate);
     }
 
     public List<EntryQueryDTO> getAllEntriesAllUsers(Date startDate, Date endDate) {
-        logger.debug("Get All Entries From All Users");
+        logger.debug("Get All Entries From All Users: " + startDate + " " + endDate);
         return jdbcTemplate.query(GET_ALL_ENTRIES, new EntryQueryDTOMapper(), startDate, endDate);
     }
 

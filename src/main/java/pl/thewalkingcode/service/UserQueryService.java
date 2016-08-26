@@ -40,7 +40,7 @@ public class UserQueryService implements IUserQueryService {
     }
 
     public boolean checkExistUsername(String username) {
-        logger.debug("Check Exist Username " + username);
+        logger.debug("Check Exist Username: " + username);
         Integer count = jdbcTemplate.queryForObject(CHECK_USERNAME, Integer.class, username);
         return count != null && count > 0;
     }

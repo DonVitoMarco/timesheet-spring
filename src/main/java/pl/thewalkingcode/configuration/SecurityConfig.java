@@ -26,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
@@ -48,6 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/denied").and()
 
                 .authorizeRequests()
+                .antMatchers("/ajax/query/entries", "/ajax/query/departments", "/ajax/query/users").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/ajax/query/show").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+                .antMatchers("/ajax/command/add", "/ajax/command/edit", "/ajax/command/del").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+                .antMatchers("/ajax/command/changeRole", "/ajax/command/changeEnable",
+                        "/ajax/command/approve", "/ajax/command/notapprove", "/ajax/command/changeDepartment").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/manage").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/timesheet").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/logout").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
@@ -60,7 +66,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //                .requiresChannel()
 //                    .antMatchers("/").requiresInsecure();
-
     }
 
     @Bean

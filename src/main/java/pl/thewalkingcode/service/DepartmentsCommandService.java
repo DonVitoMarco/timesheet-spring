@@ -23,12 +23,12 @@ public class DepartmentsCommandService implements IDepartmentsCommandService {
 
 
     public boolean deleteDepartments(String name) {
-        logger.debug("Delete Departments" + name);
+        logger.debug("Delete Departments: " + name);
         return (jdbcTemplate.update(DELETE_DEPARTMENTS, name) > 0);
     }
 
     public boolean addDepartments(String name) {
-        logger.debug("Add Departments" + name);
+        logger.debug("Add Departments: " + name);
         return (jdbcTemplate.update(ADD_DEPARTMENTS, name) > 0);
     }
 
