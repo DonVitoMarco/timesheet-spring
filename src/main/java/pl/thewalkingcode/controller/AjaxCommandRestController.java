@@ -48,17 +48,17 @@ public class AjaxCommandRestController {
     @RequestMapping(value = "/edit")
     public ResponseEntity editEntry(@RequestBody EntryFormDTO entryFormDTO) {
         logger.debug("Edit Entry: " + entryFormDTO);
-        EntryCommandDTO entry = entriesCommandService.editEntry(entryFormDTO,
+        boolean result = entriesCommandService.editEntry(entryFormDTO,
                 SecurityContextHolder.getContext().getAuthentication().getName());
-        return ResponseEntity.status(HttpStatus.OK).body(entry);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @RequestMapping(value = "/del")
     public ResponseEntity delEntry(@RequestBody EntryDeleteFormDTO entryDeleteFormDTO) {
         logger.debug("Delete Entry: " + entryDeleteFormDTO);
-        int countEntry = entriesCommandService.deleteEntry(entryDeleteFormDTO,
+        boolean result = entriesCommandService.deleteEntry(entryDeleteFormDTO,
                 SecurityContextHolder.getContext().getAuthentication().getName());
-        return ResponseEntity.status(HttpStatus.OK).body(countEntry);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @RequestMapping(value = "/changeRole")

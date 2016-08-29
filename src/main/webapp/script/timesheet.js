@@ -106,10 +106,13 @@ function addAjax() {
         success: function (d) {
             console.log("SUCCESS: ", d);
             if(d == true) {
-                $("#confirm").show().html("SUC");
+                $("#confirm").css("background-color", "limegreen").html("<i class='fa fa-check-circle' aria-hidden='true'></i>SUCCESSFUL").show();
             } else {
-                $("#confirm").show().addClass("false-confirm")
+                $("#confirm").css("background-color", "red").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i>ERROR").show();
             }
+            setTimeout(function() {
+                $('#confirm').fadeOut('slow')
+            }, 1500);
             document.getElementById("btn-search").click();
         },
         error: function (e) {
@@ -134,6 +137,14 @@ function editAjax() {
 
         success: function (d) {
             console.log("SUCCESS: ", d);
+            if(d == true) {
+                $("#confirm").css("background-color", "limegreen").html("<i class='fa fa-check-circle' aria-hidden='true'></i>SUCCESSFUL").show();
+            } else {
+                $("#confirm").css("background-color", "red").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i>ERROR").show();
+            }
+            setTimeout(function() {
+                $('#confirm').fadeOut('slow')
+            }, 1500);
             document.getElementById("btn-search").click();
         },
         error: function (e) {
@@ -157,6 +168,14 @@ function deleteEntryAjax(index) {
 
         success: function (d) {
             console.log("SUCCESS: ", d);
+            if(d == true) {
+                $("#confirm").css("background-color", "limegreen").html("<i class='fa fa-check-circle' aria-hidden='true'></i>SUCCESSFUL").show();
+            } else {
+                $("#confirm").css("background-color", "red").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i>ERROR").show();
+            }
+            setTimeout(function() {
+                $('#confirm').fadeOut('slow')
+            }, 1500);
             document.getElementById("btn-search").click();
         },
         error: function (e) {

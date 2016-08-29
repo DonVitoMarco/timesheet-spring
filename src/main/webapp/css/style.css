@@ -308,13 +308,14 @@ li button {
     background-color: limegreen;
     color: white;
     width: 25%;
-    height: 5%;
     top: 28%;
     left: 38%;
-    padding: 5px;
+    padding: 7px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
 }
 
-#false-confirm {
-    background-color: #dd0000;
+#confirm i {
+    padding-right: 10px;
 }
-

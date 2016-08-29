@@ -48,20 +48,20 @@ public class EntriesCommandService implements IEntriesCommandService {
         return false;
     }
 
-    public EntryCommandDTO editEntry(EntryFormDTO entryFormDTO, String username) {
+    public boolean editEntry(EntryFormDTO entryFormDTO, String username) {
         EntryCommandDTO entry = convertEntryFormDTOToCommandDTO(entryFormDTO, username);
         logger.debug("Edit Entry Before Convert: " + entryFormDTO.toString() + " " + username);
         logger.debug("Edit Entry: " + entry.toString());
         if (checkExistEntry(entry.getDate(), entry.getUsername())) {
-            jdbcTemplate.update(EDIT_ENTRY, entry.getStartTime(), entry.getEndTime(),
-                    entry.getTime(), entry.getDate(), entry.getUsername());
+            return  (jdbcTemplate.update(EDIT_ENTRY, entry.getStartTime(), entry.getEndTime(),
+                    entry.getTime(), entry.getDate(), entry.getUsername()) > 0);
         }
-        return entry;
+        return false;
     }
 
-    public int deleteEntry(EntryDeleteFormDTO entryDeleteFormDTO, String username) {
+    public boolean deleteEntry(EntryDeleteFormDTO entryDeleteFormDTO, String username) {
         logger.debug("Delete Entry: " + entryDeleteFormDTO + " " + username);
-        return jdbcTemplate.update(DELETE_ENTRY, username, entryDeleteFormDTO.getDate(), entryDeleteFormDTO.getIndex());
+        return (jdbcTemplate.update(DELETE_ENTRY, username, entryDeleteFormDTO.getDate(), entryDeleteFormDTO.getIndex()) > 0);
     }
 
     public boolean approveEntry(String index) {

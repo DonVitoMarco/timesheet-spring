@@ -9,9 +9,9 @@ public interface IEntriesCommandService {
 
     boolean addNewEntry(EntryFormDTO entryFormDTO, String username);
 
-    EntryCommandDTO editEntry(EntryFormDTO entryFormDTO, String username);
+    boolean editEntry(EntryFormDTO entryFormDTO, String username);
 
-    int deleteEntry(EntryDeleteFormDTO entryDeleteFormDTO, String username);
+    boolean deleteEntry(EntryDeleteFormDTO entryDeleteFormDTO, String username);
 
     boolean approveEntry(String index);
 

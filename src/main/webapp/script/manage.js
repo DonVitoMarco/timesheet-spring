@@ -280,6 +280,7 @@ function approve(i) {
 
 }
 
+
 //----------------------- FUNC -----------------------
 function hideManageTable() {
     $("#search-box").hide();
